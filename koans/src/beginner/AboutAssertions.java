@@ -66,8 +66,8 @@ public class AboutAssertions {
         Integer same = original;
         Integer different = new Integer(1);
         // These are both equal to the original...
-        assertEquals(original, same);
-        assertEquals(original, different);
+        assertEquals(original, 1);
+        assertEquals(original, 1);
         // ...but only one refers to the same instance as the original.
         assertSame(original, same);
     }

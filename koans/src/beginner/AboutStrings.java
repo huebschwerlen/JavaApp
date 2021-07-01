@@ -28,14 +28,14 @@ public class AboutStrings {
     public void newStringIsRedundant() {
         String stringInstance = "zero";
         String stringReference = new String(stringInstance);
-        assertEquals(stringInstance.equals(stringReference), stringReference.equals(stringInstance));
+        assertEquals(stringInstance.equals(stringReference), true);
     }
 
     @Koan
     public void newStringIsNotIdentical() {
         String stringInstance = "zero";
         String stringReference = new String(stringInstance);
-        assertEquals(stringInstance == stringReference, stringReference == stringInstance);
+        assertEquals(stringInstance == stringReference, false);
     }
 
     @Koan
