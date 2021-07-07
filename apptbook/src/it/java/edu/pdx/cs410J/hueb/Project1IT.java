@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.hueb;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -28,5 +29,13 @@ class Project1IT extends InvokeMainTestCase {
     assertThat(result.getExitCode(), equalTo(1));
     assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
   }
+
+  @Test
+  void testWithReadMe() {
+    MainMethodResult result = invokeMain();
+
+  }
+
+
 
 }
