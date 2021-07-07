@@ -12,7 +12,13 @@ import java.util.List;
  */
 public class Project1 {
 
-  public static final String USAGE_MESSAGE = "usage: java edu.pdx.cs410J.hueb.Project1 [options] <args>";
+  public static final String USAGE_MESSAGE = "usage: java edu.pdx.cs410J.hueb.Project1 [options] <args>\n" +
+          "args are (in this order):\n" + "owner \t The person who owns the appt book\n" +
+          "description \t A description of the appointment\n" + "begin \t When the appt begins (24-hour time)\n" +
+          "end \t When the appt ends (24-hour time)\n" + "options are (options may appear in any order):\n" +
+          "-print \t Prints a description of the new appointment\n" + "-README \t Prints a README for this project and exits\n"+
+          "* Date and time should be in the format: mm/dd/yyyy hh:mm\n" +
+          "* Owner and Description should be wrapped in quotes\n";
 
   public static void main(String[] args) {
 
@@ -29,19 +35,52 @@ public class Project1 {
       }
     }
 
-
-    if (args.length >= 3 && args.length <= 4) {
-      //if 3 args validate format of end and begin time
+    //if no -README option and args.length is appropriate for possibilities
+    if (args.length >= 6 && args.length <= 7) {
+      //if 6 args validate format of end and begin time
       //and that description isnt empty(or not)
       //then add
-      System.out.println("3 or 4 args");
+      if (args.length == 6 && !args[0].equalsIgnoreCase("-print")) {
+        boolean validDateTime6 = (validDate(args[2]) && validTime(args[3]) &&
+                validDate(args[4]) && validTime(args[5]));
 
-      //if 4 args see if first one is -print.caseinsensitive
-      //if so set a flag to print description
-      //then validate last 3 and if all good
-      //add apt and print
+        String beginTime = args[2] + " " + args[3];
+        String endTime = args[4] + " " + args[5];
 
+        Appointment appointment = new Appointment();
 
+        Appointment apt = new Appointment(args[1], beginTime, endTime);
+
+        AppointmentBook aptBook = new AppointmentBook(args[0]);
+
+        aptBook.addAppointment(apt);
+
+      }
+      else if (args.length == 7 && args[0].equalsIgnoreCase("-print")) {
+        //if 7 args see if first one is -print.caseinsensitive
+        //if so set a flag to print description
+        //then validate last and if all good
+        //add apt and print
+
+        boolean validDateTime7 = (validDate(args[3]) && validTime(args[4]) &&
+                validDate(args[5]) && validTime(args[6]));
+
+        String beginTime = args[3] + " " + args[4];
+        String endTime = args[5] + " " + args[6];
+
+        Appointment apt = new Appointment(args[2], beginTime, endTime);
+
+        AppointmentBook aptBook = new AppointmentBook(args[1]);
+
+        aptBook.addAppointment(apt);
+
+        System.out.println(apt.toString());
+//        System.out.println("Owner: " + aptBook.getOwnerName());
+//        System.out.println("AptBook Empty: " + aptBook.getAppointments().isEmpty());
+
+      } else {
+        printErrorMessageAndExitWithUsage("Invalid Type of Arguments");
+      }
 
     } else {
       printErrorMessageAndExitWithUsage("Invalid Type of Arguments");
@@ -50,10 +89,26 @@ public class Project1 {
 
   }
 
+  // mm/dd/yy
+  private static boolean validDate(String arg) {
+    boolean match = arg.matches("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d{4})");
+//    System.out.println("DATE: " + arg + " " + match);
+    return match;
+  }
+
+  // hh:mm
+  private static boolean validTime(String arg) {
+    boolean match = arg.matches("(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|[0-5][0-9])");
+//    System.out.println("TIME: " + arg + " " + match);
+    return match;
+  }
+
   private static void readMeCheck(String arg) {
       try {
         readMe();
       } catch (IOException e) {
+        printErrorMessageAndExitWithOutUsage("README.txt File Not Found");
+      } catch (NullPointerException n) {
         printErrorMessageAndExitWithOutUsage("README.txt File Not Found");
       }
   }
@@ -80,20 +135,4 @@ public class Project1 {
 }
 
 
-//    Appointment appointment = new Appointment();
 
-//    Appointment apt = new Appointment("dscrip", "btime", "etime");
-
-//    Appointment apt2 = new Appointment("dscrip2", "btime2", "etime2");
-
-//    AppointmentBook aptBook = new AppointmentBook("Jess");
-
-//    aptBook.addAppointment(apt);
-
-//    System.out.println(aptBook.getOwnerName());
-
-//    aptBook.addAppointment(apt2);
-
-//    System.out.println(aptBook.getAppointments().isEmpty());
-
-//    System.out.println(apt);
