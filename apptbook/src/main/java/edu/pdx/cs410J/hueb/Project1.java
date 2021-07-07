@@ -30,7 +30,7 @@ public class Project1 {
 
     //check for readme option
     for (String arg : args) {
-      if (arg.equals("-README")) {
+      if (arg.equalsIgnoreCase("-README")) {
         readMeCheck(arg);
       }
     }
@@ -47,14 +47,20 @@ public class Project1 {
         String beginTime = args[2] + " " + args[3];
         String endTime = args[4] + " " + args[5];
 
-        Appointment appointment = new Appointment();
+        if (validDateTime6) {
+          Appointment appointment = new Appointment();
 
-        Appointment apt = new Appointment(args[1], beginTime, endTime);
+          Appointment apt = new Appointment(args[1], beginTime, endTime);
 
-        AppointmentBook aptBook = new AppointmentBook(args[0]);
+          AppointmentBook aptBook = new AppointmentBook(args[0]);
 
-        aptBook.addAppointment(apt);
+          aptBook.addAppointment(apt);
 
+          System.exit(0);
+
+        } else {
+          printErrorMessageAndExitWithUsage("Invalid Arguments");
+        }
       }
       else if (args.length == 7 && args[0].equalsIgnoreCase("-print")) {
         //if 7 args see if first one is -print.caseinsensitive
@@ -68,26 +74,69 @@ public class Project1 {
         String beginTime = args[3] + " " + args[4];
         String endTime = args[5] + " " + args[6];
 
-        Appointment apt = new Appointment(args[2], beginTime, endTime);
+        if (validDateTime7) {
+          Appointment apt = new Appointment(args[2], beginTime, endTime);
 
-        AppointmentBook aptBook = new AppointmentBook(args[1]);
+          AppointmentBook aptBook = new AppointmentBook(args[1]);
 
-        aptBook.addAppointment(apt);
+          aptBook.addAppointment(apt);
 
-        System.out.println(apt.toString());
+          System.out.println(apt.toString());
 //        System.out.println("Owner: " + aptBook.getOwnerName());
 //        System.out.println("AptBook Empty: " + aptBook.getAppointments().isEmpty());
 
+          System.exit(0);
+        } else {
+          printErrorMessageAndExitWithUsage("Invalid Arguments");
+        }
       } else {
-        printErrorMessageAndExitWithUsage("Invalid Type of Arguments");
+        printErrorMessageAndExitWithUsage("Invalid Arguments");
       }
-
     } else {
-      printErrorMessageAndExitWithUsage("Invalid Type of Arguments");
+      printErrorMessageAndExitWithUsage("Invalid Arguments");
     }
 
 
   }
+
+
+///////////////////////////// HELPERS ///////////////////////////////////
+
+  private static void readMeCheck(String arg) {
+      try {
+        readMe();
+      } catch (IOException e) {
+        printErrorMessageAndExitWithOutUsage("Problem With README.txt File");
+      } catch (NullPointerException n) {
+        printErrorMessageAndExitWithOutUsage("README.txt File Not Found");
+      }
+  }
+
+  private static void readMe() throws IOException {
+    InputStream readme = Project1.class.getResourceAsStream("README.txt");
+    BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
+    String line = reader.readLine();
+    while((line=reader.readLine()) != null){
+      System.out.println(line);
+    }
+//    System.out.println(line);
+    System.exit(0);
+  }
+
+  private static void printErrorMessageAndExitWithUsage(String message) {
+    System.err.println(message);
+    System.err.println(USAGE_MESSAGE);
+    System.exit(1);
+  }
+
+  private static void printErrorMessageAndExitWithOutUsage(String message) {
+    System.err.println(message);
+    System.exit(1);
+  }
+
+
+
+  /////////////////////  MOVE TO STUDENT CLASS FOR PROJ 2 //////////////////////
 
   // mm/dd/yy
   private static boolean validDate(String arg) {
@@ -103,34 +152,7 @@ public class Project1 {
     return match;
   }
 
-  private static void readMeCheck(String arg) {
-      try {
-        readMe();
-      } catch (IOException e) {
-        printErrorMessageAndExitWithOutUsage("README.txt File Not Found");
-      } catch (NullPointerException n) {
-        printErrorMessageAndExitWithOutUsage("README.txt File Not Found");
-      }
-  }
 
-  private static void readMe() throws IOException {
-    InputStream readme = Project1.class.getResourceAsStream("README.txt");
-    BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
-    String line = reader.readLine();
-    System.out.println(line);
-    System.exit(0);
-  }
-
-  private static void printErrorMessageAndExitWithUsage(String message) {
-    System.err.println(message);
-    System.err.println(USAGE_MESSAGE);
-    System.exit(1);
-  }
-
-  private static void printErrorMessageAndExitWithOutUsage(String message) {
-    System.err.println(message);
-    System.exit(1);
-  }
 
 }
 

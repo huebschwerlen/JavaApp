@@ -19,7 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class Project1Test {
 
   @Test
-  @Disabled
   void readmeCanBeReadAsResource() throws IOException {
     try (
       InputStream readme = Project1.class.getResourceAsStream("README.txt")
