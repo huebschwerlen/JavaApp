@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Project1 {
 
-  public static final String USAGE_MESSAGE = "usage: java edu.pdx.cs410J.hueb.Project1 [options] <args>\n" +
+  public static final String USAGE_MESSAGE = "usage: java -jar target/apptbook-2021.0.0.jar [options] <args>\n" +
           "args are (in this order):\n" + "owner \t The person who owns the appt book\n" +
           "description \t A description of the appointment\n" + "begin \t When the appt begins (24-hour time)\n" +
           "end \t When the appt ends (24-hour time)\n" + "options are (options may appear in any order):\n" +

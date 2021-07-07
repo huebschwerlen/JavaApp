@@ -11,7 +11,7 @@ description, begin and end time entered.
 The description of the appointment can be printed after entering
 your information by prefacing your info with the -print option.
 
-usage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>
+usage: java -jar target/apptbook-2021.0.0.jar [options] <args>
 args are (in this order):
 
 owner                The person who owns the appt book
