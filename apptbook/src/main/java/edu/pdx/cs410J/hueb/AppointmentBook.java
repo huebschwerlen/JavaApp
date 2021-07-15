@@ -1,19 +1,16 @@
 package edu.pdx.cs410J.hueb;
 
-
 import edu.pdx.cs410J.AbstractAppointmentBook;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
 
 
 public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
 
 
-    private final String owner;
-//    private List<Appointment> appointmentList = new ArrayList<>();
+    private String owner;
     private ArrayList<Appointment> aptList = new ArrayList<>();
 
 
@@ -43,6 +40,18 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
     @Override
     public String getOwnerName() {
         return this.owner;
+    }
+
+
+    /**
+     * Sets a new <code>String</code> owner for this
+     * <code>AppointmentBook</code>
+     *
+     * @param owner
+     *        <code>String</code> owner of appointment book
+     */
+    public void setOwnerName(String owner) {
+        this.owner = owner;
     }
 
 

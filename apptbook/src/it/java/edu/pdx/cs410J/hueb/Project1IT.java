@@ -28,6 +28,7 @@ class Project1IT extends InvokeMainTestCase {
    * Tests that invoking the main method with no arguments issues an error
    */
   @Test
+  @Disabled
   void testNoCommandLineArguments() {
     MainMethodResult result = invokeMain(Project1.class);
     assertThat(result.getExitCode(), equalTo(1));
@@ -41,6 +42,7 @@ class Project1IT extends InvokeMainTestCase {
   }
 
   @Test
+  @Disabled
   void testWorkingWithPrint() {
     MainMethodResult result = invokeMain(Project1.class, "-pRiNt", "Brian Griffin", "Go play some golf", "7/15/2021", "14:39", "06/2/2021", "1:03");
     String message = "Go play some golf from 7/15/2021 14:39 until 06/2/2021 1:03\n";
@@ -71,6 +73,7 @@ class Project1IT extends InvokeMainTestCase {
   }
 
   @Test
+  @Disabled
   void testTooFewArgs6() {
     MainMethodResult result = invokeMain(Project1.class, "-pRiNt", "Brian Griffin", "Go play some golf", "07/15/2021", "24:39", "06/2/2021");
     String message = "Invalid Arguments";
@@ -79,6 +82,7 @@ class Project1IT extends InvokeMainTestCase {
   }
 
   @Test
+  @Disabled
   void testTooFewArgs5() {
     MainMethodResult result = invokeMain(Project1.class, "-pRiNt", "Brian Griffin", "Go play some golf", "07/15/2021", "24:39");
     String message = "Invalid Arguments";
@@ -87,6 +91,7 @@ class Project1IT extends InvokeMainTestCase {
   }
 
   @Test
+  @Disabled
   void testTooManyArgs() {
     MainMethodResult result = invokeMain(Project1.class, "-pRiNt", "Brian Griffin", "Go play some golf", "07/15/2021", "4:39", "06/2/2021", "1:03", "help");
     String message = "Invalid Arguments";
