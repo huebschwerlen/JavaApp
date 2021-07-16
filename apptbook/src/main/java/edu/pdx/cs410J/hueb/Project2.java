@@ -12,9 +12,10 @@ public class Project2 {
                 "args are (in this order):\n" + "owner \t\t The person who owns the appt book\n" +
                 "description \t A description of the appointment\n" + "begin \t\t When the appt begins (24-hour time)\n" +
                 "end \t\t When the appt ends (24-hour time)\n" + "\noptions are (options may appear in any order):\n" +
+                "-textFile file \t Where to read/write the appointment book\n" +
                 "-print \t\t Prints a description of the new appointment\n" + "-README \t Prints a README for this project and exits\n"+
                 "\n* Date and time should be in the format: mm/dd/yyyy hh:mm\n" +
-                "* Owner and Description should be wrapped in quotes\n";
+                "* Owner and Description should be wrapped in quotes\n" + "* File should be filename with valid extension\n ";
 
 //  public static void main(String[] args) {
 //
