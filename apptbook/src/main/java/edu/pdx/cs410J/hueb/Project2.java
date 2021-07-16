@@ -80,7 +80,7 @@ public class Project2 {
             if(t1.equals(t2)) {
 //      System.out.println("SAME!!!");
             } else {
-                System.out.println("Filepaths are Different!" + "\nfp1: " + t1 + "\nfp2: " + t2);
+//                System.out.println("Filepaths are Different!" + "\nfp1: " + t1 + "\nfp2: " + t2);
             }
 
 
