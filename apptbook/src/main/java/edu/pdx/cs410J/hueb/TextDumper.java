@@ -8,17 +8,37 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
+
 public class TextDumper implements AppointmentBookDumper {
 
-    private final String fileName;
+    protected final String fileName;
     private static PrintWriter err;
-    private String filePath = "/Users/sam/Desktop/PortlandStateJavaSummer2021/apptbook/src/main/resources/edu/pdx/cs410J/hueb/";
+    private final String absolutePath = new File("").getAbsolutePath();
+    private String filePath = absolutePath+"/src/main/resources/edu/pdx/cs410J/hueb/";
+
+//    System.out.println("Ab Path: " + absolutePath);
+//    private String filePath = "/Users/sam/Desktop/PortlandStateJavaSummer2021/apptbook/src/main/resources/edu/pdx/cs410J/hueb/";
 
 
+    /**
+     * Creates a new <code>TextDumper</code>
+     *
+     *@param file
+     *     The name of the file to dump to
+     */
     public TextDumper(String file) {
         this.fileName = file;
     }
 
+
+
+    /**
+     * Creates a new <code>TextDumper</code>
+     *
+     *@param aptBook
+     *      The appointment book to be dumped to file
+     */
     @Override
     public void dump(AbstractAppointmentBook aptBook) throws IOException {
         err = new PrintWriter(System.err, true);
@@ -69,7 +89,8 @@ public class TextDumper implements AppointmentBookDumper {
             writer.close();
 
         } catch (IOException ex) {
-            err.println("DUMP FAIL ** " + ex);
+            err.println("\nIOException found in TextDumper\n Please try again\n ");
+//            System.exit(1);
         }
 
 

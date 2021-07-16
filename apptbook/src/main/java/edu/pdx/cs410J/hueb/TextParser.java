@@ -13,12 +13,27 @@ import java.util.stream.Collectors;
 
 public class TextParser implements AppointmentBookParser {
 
-    private final String fileName;
-    private String filePath = "/Users/sam/Desktop/PortlandStateJavaSummer2021/apptbook/src/main/resources/edu/pdx/cs410J/hueb/";
+    protected final String fileName;
+    private final String absolutePath = new File("").getAbsolutePath();
+    private String filePath = absolutePath+"/src/main/resources/edu/pdx/cs410J/hueb/";
+//    private String filePath = "/Users/sam/Desktop/PortlandStateJavaSummer2021/apptbook/src/main/resources/edu/pdx/cs410J/hueb/";
+
+    /**
+     * Creates a new <code>TextParser</code>
+     *
+     *@param file
+     *      The name of the file that is meant to be parsed
+     */
     public TextParser(String file) {
         this.fileName = file;
     }
 
+
+    /**
+     * Parses file at fileName and returns
+     *      an appointment book with appointments added from
+     *      external file
+     */
     @Override
     public AppointmentBook parse() throws ParserException {
 
@@ -94,7 +109,7 @@ public class TextParser implements AppointmentBookParser {
                     System.err.println("\nLine " + count + " in your external appointment book storage file: " + this.fileName + " may be malformatted.\nPlease Check and Try Again"+
                             "\nRemember each line in your storage file represents an appointment in the format:" +
                             "\nowner--description--begin date<mm/dd/yyyy>--begin time<hh:mm>--end date<mm/dd/yyyy>--end time<hh:mm>" +
-                            "\nexample) Buffy Summers--Slay Vampires--7/31/1992--11:30--12/11/2001--16:30"
+                            "\nexample) Buffy Summers--Slay Vampires--07/31/1992--11:30--12/11/2001--16:30"
                             +"\nExiting...\n");
                     System.exit(1);
                 }
@@ -112,13 +127,16 @@ public class TextParser implements AppointmentBookParser {
             return aptBook;
 
         } catch (FileNotFoundException e) {
-            System.err.println("FileNotFound");
+            System.err.println("FileNotFound: " + this.fileName + "\nPlease try again with new file name\n");
+//            System.exit(1);
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            System.err.println("UnsupportedEncoding");
+            System.err.println("UnsupportedEncoding found in TextParser");
+//            System.exit(1);
             e.printStackTrace();
         } catch (IOException e) {
-            System.err.println("IOexception");
+            System.err.println("IOexception found in TextParser");
+//            System.exit(1);
             e.printStackTrace();
         }
 
