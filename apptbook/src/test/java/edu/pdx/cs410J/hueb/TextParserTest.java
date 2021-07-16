@@ -3,11 +3,11 @@ package edu.pdx.cs410J.hueb;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import edu.pdx.cs410J.ParserException;
 import org.hamcrest.CoreMatchers;
-import org.junit.Rule;
+//import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
+//import org.junit.rules.ExpectedException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -133,18 +133,18 @@ public class TextParserTest {
 
 
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
-    @Test
-    void parseWithNoValidFile() throws ParserException {
-
-        AppointmentBook ab = new AppointmentBook();
-        String file = "testParseFALSE.txt";
-        TextParser textParser = new TextParser(file);
-        exception.expect(FileNotFoundException.class);
-        textParser.parse();
-
-    }
+//    @Rule
+//    public final ExpectedException exception = ExpectedException.none();
+//    @Test
+//    void parseWithNoValidFile() throws ParserException {
+//
+//        AppointmentBook ab = new AppointmentBook();
+//        String file = "testParseFALSE.txt";
+//        TextParser textParser = new TextParser(file);
+//        exception.expect(FileNotFoundException.class);
+//        textParser.parse();
+//
+//    }
 
 
     @Test
