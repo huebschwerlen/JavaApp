@@ -4,12 +4,7 @@ import edu.pdx.cs410J.AppointmentBookParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class TextParser implements AppointmentBookParser {
 
@@ -38,72 +33,66 @@ public class TextParser implements AppointmentBookParser {
     public AppointmentBook parse() throws ParserException {
 
         try {
-//            InputStream file = Project1.class.getResourceAsStream(this.fileName);
-////            InputStream file = Project1.class.getResourceAsStream("TEST2.txt");
-//
-//            if (file == null) {
-//                System.out.println("File: " + file);
-//                file = getClass().getClassLoader().getResourceAsStream(filePath+this.fileName);
-//
-////                String test = getClass().getClassLoader().getResourceAsStream(this.fileName);
-//                System.out.println("File: " + file);
-//                if (file == null) {
-//                    System.out.println("File Still: " + file);
-////                    file = getResourceAsStream(this.fileName);
-//                }
-//
-//            }
-//
-//
-//
-//            InputStreamReader inputStream = new InputStreamReader(file);
-////            BufferedReader reader = new BufferedReader(new InputStreamReader(file));
-//            BufferedReader reader = new BufferedReader(inputStream);
-//
-//            FileReader fr = new FileReader();
-
-
-
-            BufferedReader br = new BufferedReader(new FileReader(filePath+this.fileName));
-
-
-
-
+//            BufferedReader br = new BufferedReader(new FileReader(filePath+this.fileName));
+            BufferedReader br = new BufferedReader(new FileReader(this.fileName));
 
             String line;
             String owner=null;
             ArrayList<String> data = new ArrayList<>();
-            ArrayList<String> ownerlist = new ArrayList<>();
             AppointmentBook aptBook = new AppointmentBook();
-
-
-//            while ((line = reader.readLine()) != null) {
-//                data.add(line);
-//            }
-
 
             while ((line = br.readLine()) != null) {
                 data.add(line);
             }
 
-
-//            System.out.println(data);
-
-
+            //keep track of file line num for err reporting
             int count = 0;
+
             for (String row : data) {
                 String[] values = row.split("--");
 
+                //keep track of file line num for err reporting
                 count++;
-//                System.out.println(values);
 
+                //make valid number of args
                 if(values.length==6) {
-                    owner = values[0];
-                    ownerlist.add(owner);
-                    String beginTime = values[2] + " " + values[3];
-                    String endTime = values[4] + " " + values[5];
-                    Appointment apt = new Appointment(values[1], beginTime, endTime);
-                    aptBook.addAppointment(apt);
+
+                    //owner name of the first line read in
+                    //is used to compare all following owner
+                    //names
+                    if (count==1) {
+                        owner = values[0];
+                    }
+
+                    //make sure all owner names match owner name from first line in file
+                    if (!owner.equalsIgnoreCase(values[0])) {
+                        System.err.println("\nLine " + count + " in your external appointment book storage file: " + this.fileName +
+                                "\nMay have an owner name that doesn't match other owner names in the file.\n " +
+                                "\nRemember each line in your storage file represents an appointment in the format: " +
+                                "\nowner--description--begin date<mm/dd/yyyy>--begin time<hh:mm>--end date<mm/dd/yyyy>--end time<hh:mm>" +
+                                "\nexample) Buffy Summers--Slay Vampires--07/31/1992--11:30--12/11/2001--16:30"
+                                +"\n\nExiting...\n\n");
+                        System.exit(1);
+                    }
+
+                    boolean validDateTime6 = (validDate(values[2]) && validTime(values[3]) &&
+                            validDate(values[4]) && validTime(values[5]));
+
+                    //validate date and time formatting
+                    if(validDateTime6) {
+                        String beginTime = values[2] + " " + values[3];
+                        String endTime = values[4] + " " + values[5];
+
+                        Appointment apt = new Appointment(values[1], beginTime, endTime);
+                        aptBook.addAppointment(apt);
+                    } else {
+                        System.err.println("\nLine " + count + " in your external appointment book storage file: " + this.fileName + " may be malformatted.\nPlease Check and Try Again"+
+                                "\nRemember each line in your storage file represents an appointment in the format:" +
+                                "\nowner--description--begin date<mm/dd/yyyy>--begin time<hh:mm>--end date<mm/dd/yyyy>--end time<hh:mm>" +
+                                "\nexample) Buffy Summers--Slay Vampires--07/31/1992--11:30--12/11/2001--16:30"
+                                +"\nExiting...\n");
+                        System.exit(1);
+                    }
                 } else {
 //                    System.out.println("Line from External Storage File May Be Malformatted and was Not Loaded to Apt Book: " + Arrays.toString(values));
                     System.err.println("\nLine " + count + " in your external appointment book storage file: " + this.fileName + " may be malformatted.\nPlease Check and Try Again"+
@@ -115,13 +104,8 @@ public class TextParser implements AppointmentBookParser {
                 }
 
             }
-            //citation: https://stackoverflow.com/questions/22989806/find-the-most-common-string-in-arraylist
-            String mostRepeatedWord = ownerlist.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting())).entrySet().stream().max(Comparator.comparing(Map.Entry::getValue)).get().getKey();
 
-            owner = mostRepeatedWord;
-
-//            System.out.println("\nOwner that appears the most: "+owner);
-
+            //set owner of aptbook being returned
             aptBook.setOwnerName(owner);
 
             return aptBook;
@@ -129,19 +113,33 @@ public class TextParser implements AppointmentBookParser {
         } catch (FileNotFoundException e) {
             System.err.println("FileNotFound: " + this.fileName + "\nPlease try again with new file name\n");
 //            System.exit(1);
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-            System.err.println("UnsupportedEncoding found in TextParser");
+            System.err.println("\nUnsupportedEncoding found in TextParser\n");
 //            System.exit(1);
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (IOException e) {
-            System.err.println("IOexception found in TextParser");
+            System.err.println("\nIOexception found in TextParser\n");
 //            System.exit(1);
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         return new AppointmentBook();
 
+    }
+
+    // mm/dd/yy
+    private static boolean validDate(String arg) {
+        boolean match = arg.matches("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d{4})");
+//    System.out.println("DATE: " + arg + " " + match);
+        return match;
+    }
+
+    // hh:mm
+    private static boolean validTime(String arg) {
+        boolean match = arg.matches("(0?[0-9]|1[0-9]|2[0-3]):(0?[0-9]|[0-5][0-9])");
+//    System.out.println("TIME: " + arg + " " + match);
+        return match;
     }
 
 

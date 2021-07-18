@@ -17,117 +17,13 @@ public class Project2 {
                 "\n* Date and time should be in the format: mm/dd/yyyy hh:mm\n" +
                 "* Owner and Description should be wrapped in quotes\n" + "* File should be filename with valid extension\n ";
 
-//  public static void main(String[] args) {
-//
-//
-//    String file = "TEST.txt";
-//    String fileTo = "TEXT.txt";
-//    TextParser tp = new TextParser(file);
-//
-//
-////    File currentDir = new File("");
-////    try {
-////      System.out.println("\nCurrent Dir: " + currentDir.getCanonicalPath());
-////    } catch (IOException e) {
-////      e.printStackTrace();
-////    }
-//
-//    File f = new File("apptbook/src/main/resources/edu/pdx/cs410J/hueb/"+file);
-//    if (f.exists() && !f.isDirectory()) {
-//      System.out.println("\nFile " + file + "WAS FOUND\n");
-//    } else {
-//      try {
-//        f.createNewFile();
-//      } catch (IOException e) {
-//        e.printStackTrace();
-//      }
-//    }
-//
-//    //if file exists make sure owner matches
-//    if (f.exists() && !f.isDirectory()) {
-//      System.out.println("\nFile " + file + "WAS FOUND\n");
-//      try {
-//        //System.out.println("calling parse");
-//        try {
-//          AppointmentBook ab = tp.parse();
-//          TextDumper td = new TextDumper(file);
-//          td.dump(ab);
-//        } catch (ParserException e) {
-//          e.printStackTrace();
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-//      } finally {
-//        System.out.println("\nEND\n");
-//      }
-//    } else {
-//      System.out.println("File not found");
-//    }
-//  }
 
         public static void main(String[] args) {
-            String filePath = "/Users/sam/Desktop/PortlandStateJavaSummer2021/apptbook/src/main/resources/edu/pdx/cs410J/hueb/";
-
-            String fileTEST = "TEST.txt";
-
-            String absolutePath = new File("").getAbsolutePath();
-
-//    System.out.println("Ab Path: " + absolutePath);
-
-            String filePath2 = absolutePath+"/src/main/resources/edu/pdx/cs410J/hueb/";
-
-            String t1 = filePath+fileTEST;
-            String t2 = filePath2+fileTEST;
-            if(t1.equals(t2)) {
-//      System.out.println("SAME!!!");
-            } else {
-//                System.out.println("Filepaths are Different!" + "\nfp1: " + t1 + "\nfp2: " + t2);
-            }
 
 
-            filePath = filePath2;
-
-
-
-
-//    TextParser tpp = new TextParser(fileTEST);
-//    File fi = new File(filePath+fileTEST);
-//    if (!fi.exists()) {
-//      try {
-//        System.out.println("file does not exist, trying to create");
-//        fi.createNewFile();
-//      } catch (IOException e) {
-//        System.err.println("could not create file this time either");
-//        e.printStackTrace();
-//      }
-//    } else {
-//      System.out.println(fileTEST + " seems to exist");
-//    }
-//
-//
-//    if (fi.exists() && !fi.isDirectory()) {
-//        System.out.println("\nFile " + fileTEST + " WAS FOUND\n");
-//        try {
-//          AppointmentBook ab = tpp.parse();
-//          System.out.println(ab.toString());
-//          TextDumper td = new TextDumper(fileTEST);
-//          td.dump(ab);
-//        } catch (ParserException e) {
-//          e.printStackTrace();
-//        } catch (IOException e) {
-//          e.printStackTrace();
-//        }
-//    } else {
-//      System.out.println("File not found");
-//    }
-
-
-
-
-
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             //no command line args to pass first, premade test
             if (args.length == 0) {
@@ -144,6 +40,15 @@ public class Project2 {
 
             //if no -README option and args.length is appropriate for possibilities
             if (args.length >= 6 && args.length <= 9) {
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////      ARGS LEN 6             ///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///only valid option is the 6min args
+
+
 
 
                 //if 6 args validate format of end and begin time, then add
@@ -174,12 +79,18 @@ public class Project2 {
 
 
                     } else {
-                        printErrorMessageAndExitWithUsage("6\nInvalid Arguments - Possibly May Have Wrong Combination of Arguments and Options\n");
+                        printErrorMessageAndExitWithUsage("6\nInvalid Arguments - Possibly May Have Wrong Number/Combination of Arguments and Options\n");
                     }
                 }
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////      ARGS LEN 7             ///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///only valid option is -print + 6min args
+
                 else if (args.length == 7) {
+
                     //if 7 args see if first one is -print.caseinsensitive
                     //if so set a flag to print description
                     //then validate last and if all good
@@ -200,10 +111,7 @@ public class Project2 {
 
                             aptBook.addAppointment(apt);
 
-                            System.out.println(apt.toString());
-//          System.out.println(aptBook.toString());
-//        System.out.println("Owner: " + aptBook.getOwnerName());
-//        System.out.println("AptBook Empty: " + aptBook.getAppointments().isEmpty());
+                            System.out.println("\n"+apt.toString()+"\n");
 
                             System.exit(0);
                         } else {
@@ -212,15 +120,22 @@ public class Project2 {
                         }
 
                     } else {
-                        printErrorMessageAndExitWithUsage("7\nInvalid Arguments - Possibly May Have Wrong Combination of Arguments and Options\n");
+                        printErrorMessageAndExitWithUsage("7\nInvalid Arguments - Possibly May Have Wrong Number/Combination of Arguments and Options\n");
                     }
                 }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////      ARGS LEN 8            ///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///only valid option is -textfile file + 6min args
+
 
 
                 else if (args.length == 8) {
 
                     if (args[0].equalsIgnoreCase("-textfile")) {
-
 
                         boolean validDateTime8 = (validDate(args[4]) && validTime(args[5]) &&
                                 validDate(args[6]) && validTime(args[7]));
@@ -228,37 +143,22 @@ public class Project2 {
                         String beginTime = args[4] + " " + args[5];
                         String endTime = args[6] + " " + args[7];
 
-
-
                         if (validDateTime8) {
+
                             Appointment apt = new Appointment(args[3], beginTime, endTime);
 
                             AppointmentBook aptBook = new AppointmentBook(args[2]);
 
                             aptBook.addAppointment(apt);
 
-//        System.out.println(apt.toString());
-//        System.out.println(aptBook.toString());
-//        System.out.println("Owner: " + aptBook.getOwnerName());
-//        System.out.println("AptBook Empty: " + aptBook.getAppointments().isEmpty());
-
                             String file = args[1];
-
-
-                            if (!file.contains(".")) {
-                                printErrorMessageAndExitWithOutUsage("\nPlease make sure to include file extension with file name.\n"+
-                                        "e.g. -textFile fileName.txt\n");
-                            }
-
 
                             TextParser tp = new TextParser(file);
 
-
                             //check if file exists
-                            File f = new File(filePath+file);
+                            File f = new File(file);
+
                             //if file exists make sure owner matches
-
-
                             if (f.exists() && !f.isDirectory()) {
 //              System.out.println("\nFile " + file + " WAS FOUND\n");
 
@@ -269,15 +169,12 @@ public class Project2 {
 
                                     //make sure owner names match
                                     if (ab.getOwnerName().equalsIgnoreCase(aptBook.getOwnerName())) {
+
                                         //dump aptBook to file
-
-
                                         try {
-
 
                                             TextDumper td = new TextDumper(file);
                                             td.dump(aptBook);
-
 
                                         } catch (IOException e) {
                                             printErrorMessageAndExitWithOutUsage("8\nDUMP Failed\n");
@@ -289,15 +186,7 @@ public class Project2 {
                                                 "Current Appointment Book Owner: " + ab.getOwnerName() + "\nOwner Entered: " + aptBook.getOwnerName() + "\n");
                                     }
 
-                                    //System.out.println("calling tostring on ab");
-                                    //System.out.println(ab.toString());
                                     Collection<Appointment> appointments = ab.getAppointments();
-
-                                    for (Appointment apts : appointments) {
-                                        //System.out.println("calling tostring on apt");
-                                        //System.out.println(apts.toString());
-                                    }
-
 
                                 } catch (ParserException e) {
                                     printErrorMessageAndExitWithOutUsage("8\nParse Failed\n");
@@ -305,33 +194,12 @@ public class Project2 {
                                 //if file does not exist, create file and dump to it
                             }
 
-
                             //if file doesnt exist or is directory
                             else {
-                                System.out.println("\nFILE " + file + " Not Found\nCreating file: " + file +
-                                        " in " + filePath+"\n");
-
-                                File fi = new File(filePath+fileTEST);
+                                System.out.println("\nFILE " + file + " Not Found\nAttempting to create file: " + file +"\n");
 
                                 try {
 
-                                    //make sure filepaths match
-                                    if(t1.equals(t2)) {
-//                System.out.println("SAME!!!");
-                                    } else {
-                                        System.err.println("8\nFilepaths Do Not Match\n" + "\nfp1: " + t1 + "\nfp2: " + t2);
-                                    }
-
-                                    //create new file
-                                    fi.createNewFile();
-
-
-                                } catch (IOException e) {
-                                    printErrorMessageAndExitWithOutUsage("8\nDUMP Failed\n");
-                                }
-
-
-                                try {
                                     //dump aptBook to file
                                     TextDumper td = new TextDumper(file);
                                     td.dump(aptBook);
@@ -355,13 +223,16 @@ public class Project2 {
                     }
                 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////      ARGS LEN 9            ///////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////only valid option is:    -textfile file -print + 6min args         ||        -print -textfile file + 6min args
+
 
                 else if (args.length == 9) {
 
-
-
-                    if (args[0].equalsIgnoreCase("-textfile") || args[1].equalsIgnoreCase("-textfile")
-                            && args[0].equalsIgnoreCase("-print") || args[2].equalsIgnoreCase("-print")) {
+                    if ((args[0].equalsIgnoreCase("-textfile") || args[1].equalsIgnoreCase("-textfile"))
+                            && (args[0].equalsIgnoreCase("-print") || args[2].equalsIgnoreCase("-print")))  {
 
                         boolean validDateTime9 = (validDate(args[5]) && validTime(args[6]) &&
                                 validDate(args[7]) && validTime(args[8]));
@@ -376,12 +247,6 @@ public class Project2 {
 
                             aptBook.addAppointment(apt);
 
-                            System.out.println(apt.toString());
-
-//        System.out.println(aptBook.toString());
-//        System.out.println("Owner: " + aptBook.getOwnerName());
-//        System.out.println("AptBook Empty: " + aptBook.getAppointments().isEmpty());
-
 
                             //find which arg index -textfile string is at
                             //in order to find position of "file" name string'
@@ -394,19 +259,13 @@ public class Project2 {
 
                             String file = args[fileFlag];
 
-                            if (!file.contains(".")) {
-                                printErrorMessageAndExitWithOutUsage("\nPlease make sure to include file extension with file name.\n"+
-                                        "e.g. -textFile fileName.txt\n");
-                            }
-
                             TextParser tp = new TextParser(file);
 
                             //check if file exists
-                            File f = new File(filePath+file);
+                            File f = new File(file);
 
                             //if file exists make sure owner matches
                             if (f.exists() && !f.isDirectory()) {
-//              System.out.println("\nFile " + file + " WAS FOUND\n");
 
                                 try {
                                     //System.out.println("calling parse");
@@ -419,10 +278,12 @@ public class Project2 {
 
                                             TextDumper td = new TextDumper(file);
                                             td.dump(aptBook);
+
+                                            System.out.println("\n"+apt.toString()+"\n");
                                             System.exit(0);
 
                                         } catch (IOException e) {
-                                            printErrorMessageAndExitWithOutUsage("9\nDUMP Failed\n");
+                                            printErrorMessageAndExitWithOutUsage("\n9) DUMP Failed\n");
                                         }
                                         //if owners dont match exit with error message
                                     } else {
@@ -430,49 +291,30 @@ public class Project2 {
                                                 "Current Appointment Book Owner: " + ab.getOwnerName() + "\nOwner Entered: " + aptBook.getOwnerName() + "\n");
                                     }
 
-                                    //System.out.println("calling tostring on ab");
-                                    //System.out.println(ab.toString());
                                     Collection<Appointment> appointments = ab.getAppointments();
 
-                                    for (Appointment apts : appointments) {
-                                        //System.out.println("calling tostring on apt");
-                                        //System.out.println(apts.toString());
-                                    }
                                 } catch (ParserException e) {
-                                    printErrorMessageAndExitWithOutUsage("9\nPARSE Failed\n");
+                                    printErrorMessageAndExitWithOutUsage("\n9)PARSE Failed\n");
                                 }
 
 
                                 //if file does NOT exist, create file and dump to it
                             } else {
                                 //CREATE FILE
-                                System.out.println("\nFILE " + file + " Not Found\nCreating file: " + file +
-                                        " in " + filePath + "\n");
+                                System.out.println("\nFILE " + file + " Not Found\nAttempting to create file: " + file + "\n");
 
-                                File fi = new File(filePath+fileTEST);
 
-                                try {
-
-                                    if(t1.equals(t2)) {
-//                  System.out.println("SAME!!!");
-                                    } else {
-                                        System.out.println("\nFilepaths Are Not the Same" + "\nfp1: " + t1 + "\nfp2: " + t2 + "\n");
-                                    }
-
-                                    fi.createNewFile();
-
-                                } catch (IOException e) {
-                                    printErrorMessageAndExitWithOutUsage("9\nCreate File Failed\n");
-                                }
                                 //dump aptBook to file
                                 try {
 
                                     TextDumper td = new TextDumper(file);
                                     td.dump(aptBook);
+
+                                    System.out.println("\n"+apt.toString()+"\n");
                                     System.exit(0);
 
                                 } catch (IOException e) {
-                                    printErrorMessageAndExitWithOutUsage("9\nDUMP Failed\n");
+                                    printErrorMessageAndExitWithOutUsage("\n9) DUMP Failed\n");
                                 }
 
                             }
@@ -481,22 +323,22 @@ public class Project2 {
 
                         } else {
                             //if (validDateTime9)
-                            printErrorMessageAndExitWithUsage("9\nInvalid Arguments - Please Check the Formatting of Your Dates and Times\n");
+                            printErrorMessageAndExitWithUsage("\n9) Invalid Arguments - Please Check the Formatting of Your Dates and Times\n");
 
                         }
 
                     } else {
-                        printErrorMessageAndExitWithUsage("9\nInvalid Arguments - Possibly  Missing Options: -print and/or -textFile file\n");
+                        printErrorMessageAndExitWithUsage("\n9) Invalid Arguments - Possibly  Missing or Malformed Options: -print and/or -textFile file\n");
                     }
 
                 } else {
-                    printErrorMessageAndExitWithUsage("9\nInvalid Arguments - Possibly May Have Wrong Combination of Arguments and Options\n");
+                    printErrorMessageAndExitWithUsage("\n9) Invalid Arguments - Possibly May Have Wrong Combination of Arguments and Options\n");
                 }
 
                 //if (args.length >= 6 && args.length <= 9)
             } else {
                 //if (args.length >= 6 && args.length <= 9)
-                printErrorMessageAndExitWithUsage("9\nInvalid Arguments - Possibly Too Many or Too Few Arguments/Options Entered\n");
+                printErrorMessageAndExitWithUsage("\n9) Invalid Arguments - Possibly Too Many or Too Few Arguments/Options Entered\n");
             }
 
             System.exit(0);
@@ -505,7 +347,9 @@ public class Project2 {
 
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -560,30 +404,6 @@ public class Project2 {
 //    System.out.println("TIME: " + arg + " " + match);
             return match;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

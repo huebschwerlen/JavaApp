@@ -4,8 +4,6 @@ import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -41,12 +39,14 @@ public class TextDumper implements AppointmentBookDumper {
      */
     @Override
     public void dump(AbstractAppointmentBook aptBook) throws IOException {
+
         err = new PrintWriter(System.err, true);
 
         try {
 //            Writer writer = new FileWriter(new File(String.valueOf(getClass().getResource(this.fileName))));
 
-            File fi = new File(filePath+this.fileName);
+//            File fi = new File(filePath+this.fileName);
+            File fi = new File(this.fileName);
 
 //    File fi = new File("/resources/edu/pdx/cs410J/hueb/"+fileTEST);
 //            String absolutePath = fi.getAbsolutePath();
@@ -89,15 +89,11 @@ public class TextDumper implements AppointmentBookDumper {
             writer.close();
 
         } catch (IOException ex) {
-            err.println("\nIOException found in TextDumper\n Please try again\n ");
-//            System.exit(1);
+            err.println("\nDirectory Entered Doesn't Seem To Exist\nPlease Try Again With Valid Existing Directory\n ");
+            System.exit(1);
         }
 
 
     }
 
-//    @Override
-//    public void dump(AbstractAppointmentBook abstractAppointmentBook) throws IOException {
-//
-//    }
 }

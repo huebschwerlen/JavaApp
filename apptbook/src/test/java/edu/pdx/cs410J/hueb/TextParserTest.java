@@ -57,6 +57,7 @@ public class TextParserTest {
     }
 
     @Test
+    @Disabled
     void parse() {
 
         AppointmentBook ab = new AppointmentBook();
@@ -76,6 +77,7 @@ public class TextParserTest {
     }
 
     @Test
+    @Disabled
     void parse2() {
 
         AppointmentBook ab = new AppointmentBook();
@@ -93,6 +95,7 @@ public class TextParserTest {
     }
 
     @Test
+    @Disabled
     void parse3() {
 
         AppointmentBook ab = new AppointmentBook();
