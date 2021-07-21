@@ -2,7 +2,7 @@ package edu.pdx.cs410J.hueb;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the {@link PrettyPrinter} class.

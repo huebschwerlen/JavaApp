@@ -1,24 +1,14 @@
 package edu.pdx.cs410J.hueb;
 
-import edu.pdx.cs410J.InvokeMainTestCase;
 import edu.pdx.cs410J.ParserException;
 import org.hamcrest.CoreMatchers;
-//import org.junit.Rule;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-//import org.junit.rules.ExpectedException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertLinesMatch;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Unit tests for the {@link TextParser} class.
