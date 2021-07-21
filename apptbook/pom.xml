@@ -71,7 +71,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>edu.pdx.cs410J.hueb.Project2</mainClass>
+              <mainClass>edu.pdx.cs410J.hueb.Project3</mainClass>
             </manifest>
           </archive>
         </configuration>

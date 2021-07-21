@@ -4,10 +4,10 @@ import edu.pdx.cs410J.AbstractAppointmentBook;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 
-
-public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
+public class AppointmentBook extends AbstractAppointmentBook<Appointment>{
 
 
     private String owner;
@@ -76,6 +76,7 @@ public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
     public void addAppointment(Appointment apt) {
         this.aptList.add(apt);
     }
+
 
 
 }

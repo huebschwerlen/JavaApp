@@ -1,7 +1,6 @@
 package advanced;
 
 import com.sandwich.koan.Koan;
-
 import static com.sandwich.util.Assert.fail;
 
 public class AboutMocks {
@@ -35,12 +34,17 @@ public class AboutMocks {
         }
     }
 
+    static class NonExplosiveCollaborator implements Collaborator {
+        public void doBusinessStuff() {  }
+    }
+
     @Koan
     public void simpleAnonymousMock() {
         // HINT: pass a safe Collaborator implementation to constructor
         // new ClassUnderTest(new Collaborator(){... it should not be the
         // objective of this test to test that collaborator, so replace it
-        new ClassUnderTest().doSomething();
+        Collaborator nonExplosiveCollaborator = new NonExplosiveCollaborator();
+        new ClassUnderTest(( nonExplosiveCollaborator )).doSomething();
     }
 
 }

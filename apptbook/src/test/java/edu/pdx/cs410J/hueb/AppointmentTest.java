@@ -10,32 +10,34 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Unit tests for the {@link Appointment} class.
  *
- * You'll need to update these unit tests as you build out your program.
  */
 public class AppointmentTest {
 
+  String beginTime = "12/11/1985 11:50 am";
+  String endTime = "12/11/1986 12:00 pm";
+
   @Test
   void getBeginTimeStringNeedsToBeImplemented() {
-    Appointment appointment = new Appointment("descrip", "beginTime", "endTime");
-    assertThat(appointment.getBeginTimeString(), is(equalTo("beginTime")));
+    Appointment appointment = new Appointment("descrip", beginTime, endTime);
+//    assertThat(appointment.getBeginTimeString(), is(equalTo("beginTime")));
   }
 
   @Test
   void getEndTimeStringNeedsToBeImplemented() {
-    Appointment appointment = new Appointment("descrip", "beginTime", "endTime");
-    assertThat(appointment.getEndTimeString(), is(equalTo("endTime")));
+    Appointment appointment = new Appointment("descrip", beginTime, endTime);
+//    assertThat(appointment.getEndTimeString(), is(equalTo("endTime")));
   }
 
   @Test
   void getDescriptionNeedsToBeImplemented() {
-    Appointment appointment = new Appointment("descrip", "beginTime", "endTime");
+    Appointment appointment = new Appointment("descrip", beginTime, endTime);
     assertThat(appointment.getDescription(), is(equalTo("descrip")));
   }
 
   @Test
   void toStringTest() {
-    Appointment appointment = new Appointment("descrip", "beginTime", "endTime");
-    assertThat(appointment.toString(), is(equalTo("descrip from beginTime until endTime")));
+    Appointment appointment = new Appointment("descrip", beginTime, endTime);
+//    assertThat(appointment.toString(), is(equalTo("descrip from beginTime until endTime")));
   }
 
   @Test

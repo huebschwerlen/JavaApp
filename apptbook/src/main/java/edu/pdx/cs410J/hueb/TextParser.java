@@ -4,7 +4,11 @@ import edu.pdx.cs410J.AppointmentBookParser;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TextParser implements AppointmentBookParser {
 
@@ -83,8 +87,29 @@ public class TextParser implements AppointmentBookParser {
                         String beginTime = values[2] + " " + values[3];
                         String endTime = values[4] + " " + values[5];
 
-                        Appointment apt = new Appointment(values[1], beginTime, endTime);
+                        Date beginTime1 = null;
+                        Date endTime1 = null;
+
+                        try {
+                            beginTime1 = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(beginTime);
+                        } catch (ParseException e) {
+                            System.err.println("\nbegin time format failed in text parser\n");
+                            e.printStackTrace();
+                        }
+                        try {
+                            endTime1 = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(beginTime);
+                        } catch (ParseException e) {
+                            System.err.println("\nend time format failed in text parser\n");
+                            e.printStackTrace();
+                        }
+
+                        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm aa");
+                        String beginTime2 = df.format(beginTime1);
+                        String endTime2 = df.format(endTime1);
+
+                        Appointment apt = new Appointment(values[1], beginTime2, endTime2);
                         aptBook.addAppointment(apt);
+
                     } else {
                         System.err.println("\nLine " + count + " in your external appointment book storage file: " + this.fileName + " may be malformatted.\nPlease Check and Try Again"+
                                 "\nRemember each line in your storage file represents an appointment in the format:" +

@@ -1,7 +1,7 @@
 This is a README file!
 
 Sam Huebschwerlen
-Project 2
+Project 3
 
 User can enter in a name, appointment description, begin time, and end time
 into the command line and the program will create a new appointment book belonging
@@ -26,11 +26,14 @@ begin                When the appt begins (24-hour time)
 end                  When the appt ends (24-hour time)
 
 options are (options may appear in any order):
+-pretty file        Pretty print the appointment book to
+                    a text file or standard out (file -)
 -textFile file      Where to read/write the appointment book
 -print              Prints a description of the new appointment
 -README             Prints a README for this project and exits
 
-Date and time should be in the format: mm/dd/yyyy hh:mm
+Date and time should be in the format: mm/dd/yyyy hh:mm am/pm
+End Time Can Not Be Before Begin Time
 
 Owner and Descriptions should be wrapped in quotes.
 
@@ -39,4 +42,5 @@ create a new external file of the same name entered to save appointments to.
 
 When using -README option the README.txt file will print to the screen and quit the application.
 To use the application to add an appointment, please remove the -README option from the command line.
+
 

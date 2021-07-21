@@ -4,19 +4,16 @@ import edu.pdx.cs410J.AbstractAppointmentBook;
 import edu.pdx.cs410J.AppointmentBookDumper;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
-
+import java.util.Date;
 
 
 public class TextDumper implements AppointmentBookDumper {
 
     protected final String fileName;
     private static PrintWriter err;
-    private final String absolutePath = new File("").getAbsolutePath();
-    private String filePath = absolutePath+"/src/main/resources/edu/pdx/cs410J/hueb/";
-
-//    System.out.println("Ab Path: " + absolutePath);
-//    private String filePath = "/Users/sam/Desktop/PortlandStateJavaSummer2021/apptbook/src/main/resources/edu/pdx/cs410J/hueb/";
 
 
     /**
@@ -32,7 +29,7 @@ public class TextDumper implements AppointmentBookDumper {
 
 
     /**
-     * Creates a new <code>TextDumper</code>
+     * Dumps aptBook to file
      *
      *@param aptBook
      *      The appointment book to be dumped to file
@@ -43,35 +40,31 @@ public class TextDumper implements AppointmentBookDumper {
         err = new PrintWriter(System.err, true);
 
         try {
-//            Writer writer = new FileWriter(new File(String.valueOf(getClass().getResource(this.fileName))));
 
-//            File fi = new File(filePath+this.fileName);
             File fi = new File(this.fileName);
-
-//    File fi = new File("/resources/edu/pdx/cs410J/hueb/"+fileTEST);
-//            String absolutePath = fi.getAbsolutePath();
-//            String filePath = absolutePath.substring(0,absolutePath.lastIndexOf(File.separator));
 
             Writer writer = new FileWriter(fi,true);
 
-//          Writer writer = new FileWriter(new File("apptbook/src/main/resources/edu/pdx/cs410J/hueb/",this.fileName),true);
             Collection<Appointment> appointments = aptBook.getAppointments();
 
-//            writer.write("\n");
-
-
             for (Appointment apt : appointments) {
-                String beginTime = apt.getBeginTimeString();
-                String endTime = apt.getEndTimeString();
+                Date bTime = apt.getBeginTime();
+                Date eTime = apt.getEndTime();
+
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
+                String beginTime = df.format(bTime);
+                String endTime = df.format(eTime);
+
                 String[] bVals = beginTime.split(" ");
                 String[] eVals = endTime.split(" ");
 
-
-
                 writer.write(aptBook.getOwnerName());
                 writer.write("--");
+
                 writer.write(apt.getDescription());
                 writer.write("--");
+
                 writer.write(bVals[0]);
                 writer.write("--");
                 writer.write(bVals[1]);
@@ -80,7 +73,6 @@ public class TextDumper implements AppointmentBookDumper {
                 writer.write(eVals[0]);
                 writer.write("--");
                 writer.write(eVals[1]);
-
 
                 writer.write("\n");
             }

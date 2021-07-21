@@ -15,15 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Unit tests for the {@link TextDumper} class.
  *
- * You'll need to update these unit tests as you build out your program.
  */
 public class TextDumperTest {
+    String beginTime = "12/11/1985 11:50 am";
+    String endTime = "12/11/1986 12:00 pm";
 
     @Test
     void createDumper() throws IOException {
 
         AppointmentBook ab = new AppointmentBook("Cheryl");
-        Appointment appointment = new Appointment("descrip", "beginTime", "endTime");
+        Appointment appointment = new Appointment("descrip", beginTime, endTime);
         ab.addAppointment(appointment);
 
 

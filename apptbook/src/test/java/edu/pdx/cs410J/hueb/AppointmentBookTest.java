@@ -14,9 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Unit tests for the {@link AppointmentBook} class.
  *
- * You'll need to update these unit tests as you build out your program.
  */
 public class AppointmentBookTest {
+    String beginTime = "12/11/1985 11:50 am";
+    String endTime = "12/11/1986 12:00 pm";
 
     @Test
     void createAptBookNoOwner() {
@@ -35,7 +36,7 @@ public class AppointmentBookTest {
     @Test
     void createAptBookWithOwnerAddApt() {
         AppointmentBook ab = new AppointmentBook("Cheryl");
-        Appointment appointment = new Appointment("descrip", "beginTime", "endTime");
+        Appointment appointment = new Appointment("descrip", beginTime, endTime);
 
         assertThat(ab.getOwnerName(), CoreMatchers.is(equalTo("Cheryl")));
         assertThat(ab.getAppointments().isEmpty(), CoreMatchers.is(equalTo(true)));
