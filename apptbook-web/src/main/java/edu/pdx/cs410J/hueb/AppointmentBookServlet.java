@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,11 +39,101 @@ public class AppointmentBookServlet extends HttpServlet
         response.setContentType( "text/plain" );
 
         String owner = getParameter( OWNER_PARAMETER, request );
+
+        String beginTime = getParameter(BEGINTIME_PARAMETER, request);
+        String endTime = getParameter(ENDTIME_PARAMETER, request);
+
         if (owner == null) {
             missingRequiredParameter(response, OWNER_PARAMETER);
+        } else if (owner != null && beginTime != null && endTime != null)  {
+            writeAppointmentBookByTime(owner, beginTime, endTime, response);
         } else {
             writeAppointmentBook(owner, response);
+        }
+    }
 
+
+    /**
+     * Writes the appointments that begin within time range
+     * from appointmentBook of owner to the HTTP response.
+     *
+     * The text of the message is formatted with TextDumper2
+     */
+    private void writeAppointmentBookByTime(String owner, String beginTime, String endTime, HttpServletResponse response) throws IOException {
+        AppointmentBook book = this.books.get(owner);
+
+
+
+        if (book == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            Date beginTime1 = null;
+            try {
+                beginTime1 = new SimpleDateFormat("MM/dd/yyyy hh:mm aa").parse(beginTime);
+            } catch (ParseException e) {
+                System.err.println("\nSRVLT) Parse of Begin Time failed - Please Check your Date/Time Formatting\n");
+//                            e.printStackTrace();
+            }
+
+            Date endTime1 = null;
+            try {
+                endTime1 = new SimpleDateFormat("MM/dd/yyyy hh:mm aa").parse(endTime);
+            } catch (ParseException e) {
+                System.err.println("\nSRVLT) Parse of End Time failed - Please Check your Date/Time Formatting\n");
+//                            e.printStackTrace();
+            }
+
+
+            AppointmentBook bookByTime = new AppointmentBook(owner);
+
+            for (Appointment appt : book.getAppointments()){
+
+                Boolean between = appt.getBeginTime().after(beginTime1) && appt.getBeginTime().before(endTime1);
+                Boolean equals =  appt.getBeginTime().equals(beginTime1) || appt.getBeginTime().equals(endTime1);
+//                System.out.println("\n between: " + between + " equals: " + equals + "\n");
+
+                if(between || equals ) {
+                    bookByTime.addAppointment(appt);
+                }
+
+            }
+
+            if (bookByTime == null) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+
+                PrintWriter pw = response.getWriter();
+
+                TextDumper2 dumper = new TextDumper2(pw);
+                dumper.dump(bookByTime);
+                pw.flush();
+
+                response.setStatus(HttpServletResponse.SC_OK);
+
+            }
+
+
+        }
+    }
+
+    /**
+     * Writes the appointmentBook of owner to the HTTP response.
+     *
+     * The text of the message is formatted with TextDumper2
+     */
+    private void writeAppointmentBook(String owner, HttpServletResponse response) throws IOException {
+        AppointmentBook book = this.books.get(owner);
+        if (book == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+        } else {
+            PrintWriter pw = response.getWriter();
+
+            TextDumper2 dumper = new TextDumper2(pw);
+            dumper.dump(book);
+            pw.flush();
+
+            response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
@@ -131,28 +224,7 @@ public class AppointmentBookServlet extends HttpServlet
 
 
 
-    /**
-     * Writes the appointmentBook of owner to the HTTP response.
-     *
-     * The text of the message is formatted with
-     */
-    private void writeAppointmentBook(String owner, HttpServletResponse response) throws IOException {
-        AppointmentBook book = this.books.get(owner);
 
-        if (book == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-        } else {
-            PrintWriter pw = response.getWriter();
-
-            TextDumper2 dumper = new TextDumper2(pw);
-            dumper.dump(book);
-
-            pw.flush();
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        }
-    }
 
 
 

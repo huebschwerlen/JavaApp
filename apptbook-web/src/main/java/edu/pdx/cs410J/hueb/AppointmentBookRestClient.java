@@ -39,26 +39,39 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
   }
 
   /**
-   * Returns the definition for the given word
+   * Returns the appts for the given owner
    */
-  public String getDefinition(String word) throws IOException {
-    Response response = get(this.url, Map.of("word", word));
+  public String getAppointments(String owner) throws IOException {
+    Response response = get(this.url, Map.of("owner", owner));
     throwExceptionIfNotOkayHttpStatus(response);
-    String content = response.getContent();
-    return Messages.parseDictionaryEntry(content).getValue();
+    return response.getContent();
   }
 
-  public void addDictionaryEntry(String word, String definition) throws IOException {
-    Response response = postToMyURL(Map.of("word", word, "definition", definition));
+  /**
+   * Returns the appts for the given owner that begin within time range
+   */
+  public String getAppointmentsByTime(String owner, String beginTime, String endTime) throws IOException {
+    Response response = get(this.url, Map.of("owner",owner, "beginTime", beginTime, "endTime", endTime));
+    throwExceptionIfNotOkayHttpStatus(response);
+    return response.getContent();
+  }
+
+
+  /**
+   * Creates the appt and adds to owners appt book
+   */
+  public void createAppointment(String owner, String description, String beginTime, String endTime) throws IOException {
+    Response response = postToMyURL(Map.of("owner", owner, "description",
+            description, "beginTime", beginTime, "endTime", endTime));
     throwExceptionIfNotOkayHttpStatus(response);
   }
 
   @VisibleForTesting
-  Response postToMyURL(Map<String, String> dictionaryEntries) throws IOException {
-    return post(this.url, dictionaryEntries);
+  Response postToMyURL(Map<String, String> appointmentInfo) throws IOException {
+    return post(this.url, appointmentInfo);
   }
 
-  public void removeAllDictionaryEntries() throws IOException {
+  public void removeAllAptBooks() throws IOException {
     Response response = delete(this.url, Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
   }
@@ -71,5 +84,6 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     }
     return response;
   }
+
 
 }

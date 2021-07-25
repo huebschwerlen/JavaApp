@@ -701,7 +701,7 @@ public class Project3 {
         return match;
     }
 
-    // hh:mm
+    // am / pm
     private static boolean validTimeAmPm(String arg) {
         boolean match = arg.matches("([a,A,p,P][m,M])");
 //    System.out.println("TIME: " + arg + " " + match);

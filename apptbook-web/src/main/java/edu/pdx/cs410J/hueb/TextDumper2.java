@@ -41,10 +41,38 @@ public class TextDumper2 implements AppointmentBookDumper<AppointmentBook> {
     @Override
     public void dump(AppointmentBook aptBook) throws IOException {
 
-        writer.println("\nOwner: " + aptBook.getOwnerName());
-        writer.println();
-        for(Appointment appointment : aptBook.getAppointments() ) {
-            writer.println(appointment.toString());
+
+        for(Appointment apt : aptBook.getAppointments() ) {
+//            writer.println(apt.toString());
+
+            Date bTime = apt.getBeginTime();
+            Date eTime = apt.getEndTime();
+
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+
+            String beginTime = df.format(bTime);
+            String endTime = df.format(eTime);
+
+            String[] bVals = beginTime.split(" ");
+            String[] eVals = endTime.split(" ");
+
+            writer.write(aptBook.getOwnerName());
+            writer.write("--");
+
+            writer.write(apt.getDescription());
+            writer.write("--");
+
+            writer.write(bVals[0]);
+            writer.write("--");
+            writer.write(bVals[1]);
+            writer.write("--");
+
+            writer.write(eVals[0]);
+            writer.write("--");
+            writer.write(eVals[1]);
+
+            writer.write("\n");
+
         }
 
     }

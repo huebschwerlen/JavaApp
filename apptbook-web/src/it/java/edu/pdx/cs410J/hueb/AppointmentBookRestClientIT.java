@@ -27,9 +27,9 @@ class AppointmentBookRestClientIT {
   }
 
   @Test
-  void test0RemoveAllDictionaryEntries() throws IOException {
+  void test0RemoveAllAptBooks() throws IOException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
-    client.removeAllDictionaryEntries();
+    client.removeAllAptBooks();
   }
 
   @Test
@@ -40,14 +40,18 @@ class AppointmentBookRestClientIT {
   }
 
   @Test
-  void test2DefineOneWord() throws IOException {
+  void test2CreateAptBookWithOneApt() throws IOException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
-    String testWord = "TEST WORD";
-    String testDefinition = "TEST DEFINITION";
-    client.addDictionaryEntry(testWord, testDefinition);
+    String owner = "Dave";
+    String description = "teach java";
+    String beginTime = "12/11/1985 4:30 pm";
+    String endTime = "12/11/1986 8:30 am";
 
-    String definition = client.getDefinition(testWord);
-    assertThat(definition, equalTo(testDefinition));
+    client.createAppointment(owner, description, beginTime, endTime);
+
+    String aptBookText = client.getAppointments(owner);
+    assertThat(aptBookText, containsString(owner));
+    assertThat(aptBookText, containsString(description));
   }
 
   @Test
@@ -57,7 +61,7 @@ class AppointmentBookRestClientIT {
     //postToMyUrl is a public method in AptBookRestClient specifically
     //for testing this scenario
     HttpRequestHelper.Response response = client.postToMyURL(Map.of());
-    assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("word")));
+    assertThat(response.getContent(), containsString("required parameter"));
     assertThat(response.getCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
   }
 

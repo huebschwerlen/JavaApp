@@ -66,11 +66,11 @@ public class AppointmentBookServletTest {
     String text = sw.toString();
     assertThat(text,containsString(owner));
     assertThat(text,containsString(description));
-    assertThat(text,containsString("12/11/85"));
+    assertThat(text,containsString("12/11/1985"));
 
     assertThat(text,containsString(owner));
     assertThat(text,containsString(description2));
-    assertThat(text,containsString("12/11/22"));
+    assertThat(text,containsString("12/11/1922"));
   }
 
 
@@ -140,7 +140,7 @@ public class AppointmentBookServletTest {
     String text = sw.toString();
     assertThat(text, containsString(owner));
     assertThat(text, containsString(description));
-    assertThat(text, containsString("12/11/85"));
+    assertThat(text, containsString("12/11/1985"));
   }
 
   private StringWriter invokeServletMethod(Map<String, String> params, ServletMethodInvoker invoker) throws IOException, ServletException {
