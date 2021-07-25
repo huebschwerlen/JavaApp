@@ -12,41 +12,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This servlet ultimately provides a REST API for working with an
- * <code>AppointmentBook</code>.  However, in its current state, it is an example
- * of how to use HTTP and Java servlets to store simple dictionary of words
- * and their definitions.
+ * This servlet provides a REST API for working with an
+ * <code>AppointmentBook</code>.
  */
 public class AppointmentBookServlet extends HttpServlet
 {
-    static final String WORD_PARAMETER = "word";
-    static final String DEFINITION_PARAMETER = "definition";
+    static final String OWNER_PARAMETER = "owner";
+    static final String DESCRIPTION_PARAMETER = "description";
+    static final String BEGINTIME_PARAMETER = "beginTime";
+    static final String ENDTIME_PARAMETER = "endTime";
 
-    private final Map<String, String> dictionary = new HashMap<>();
+    private final Map<String, AppointmentBook> books = new HashMap<>();
 
     /**
-     * Handles an HTTP GET request from a client by writing the definition of the
-     * word specified in the "word" HTTP parameter to the HTTP response.  If the
-     * "word" parameter is not specified, all of the entries in the dictionary
-     * are written to the HTTP response.
+     * Handles an HTTP GET request from a client by writing the appointment book contents
+     * of the owner specified in the "owner" HTTP parameter to the HTTP response.
+     * If the"owner" parameter is not specified the client will receive an error.
+     * If there is no "owner" match the client will receive a message alerting them.
      */
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
         response.setContentType( "text/plain" );
 
-        String word = getParameter( WORD_PARAMETER, request );
-        if (word != null) {
-            writeDefinition(word, response);
-
+        String owner = getParameter( OWNER_PARAMETER, request );
+        if (owner == null) {
+            missingRequiredParameter(response, OWNER_PARAMETER);
         } else {
-            writeAllDictionaryEntries(response);
+            writeAppointmentBook(owner, response);
+
         }
     }
 
     /**
-     * Handles an HTTP POST request by storing the dictionary entry for the
-     * "word" and "definition" request parameters.  It writes the dictionary
+     * Handles an HTTP POST request by storing the appointment entry for the
+     * "owner" and "appointment" request parameters.  It writes the appointment
      * entry to the HTTP response.
      */
     @Override
@@ -54,29 +54,50 @@ public class AppointmentBookServlet extends HttpServlet
     {
         response.setContentType( "text/plain" );
 
-        String word = getParameter(WORD_PARAMETER, request );
-        if (word == null) {
-            missingRequiredParameter(response, WORD_PARAMETER);
+
+
+        String owner = getParameter(OWNER_PARAMETER, request );
+        if (owner == null) {
+            missingRequiredParameter(response, OWNER_PARAMETER);
             return;
         }
 
-        String definition = getParameter(DEFINITION_PARAMETER, request );
-        if ( definition == null) {
-            missingRequiredParameter( response, DEFINITION_PARAMETER );
+        String description = getParameter(DESCRIPTION_PARAMETER, request );
+        if ( description == null) {
+            missingRequiredParameter( response, DESCRIPTION_PARAMETER );
             return;
         }
 
-        this.dictionary.put(word, definition);
+        String beginTime = getParameter(BEGINTIME_PARAMETER, request );
+        if ( beginTime == null) {
+            missingRequiredParameter( response, BEGINTIME_PARAMETER );
+            return;
+        }
 
-        PrintWriter pw = response.getWriter();
-        pw.println(Messages.definedWordAs(word, definition));
-        pw.flush();
+        String endTime= getParameter(ENDTIME_PARAMETER, request );
+        if ( endTime == null) {
+            missingRequiredParameter( response, ENDTIME_PARAMETER );
+            return;
+        }
+
+
+        AppointmentBook book = this.books.get(owner);
+        if (book == null) {
+            book = createAppointmentBook(owner);
+        }
+
+        Appointment appointment = new Appointment(description,beginTime,endTime);
+        book.addAppointment(appointment);
 
         response.setStatus( HttpServletResponse.SC_OK);
-    }
+
+        }
+
+
+
 
     /**
-     * Handles an HTTP DELETE request by removing all dictionary entries.  This
+     * Handles an HTTP DELETE request by removing all appointmentBooks.  This
      * behavior is exposed for testing purposes only.  It's probably not
      * something that you'd want a real application to expose.
      */
@@ -84,15 +105,17 @@ public class AppointmentBookServlet extends HttpServlet
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
 
-        this.dictionary.clear();
+        this.books.clear();
 
         PrintWriter pw = response.getWriter();
-        pw.println(Messages.allDictionaryEntriesDeleted());
+        pw.println(Messages.allAptBooksDeleted());
         pw.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);
 
     }
+
+
 
     /**
      * Writes an error message about a missing parameter to the HTTP response.
@@ -106,21 +129,24 @@ public class AppointmentBookServlet extends HttpServlet
         response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
     }
 
+
+
     /**
-     * Writes the definition of the given word to the HTTP response.
+     * Writes the appointmentBook of owner to the HTTP response.
      *
      * The text of the message is formatted with
-     * {@link Messages#formatDictionaryEntry(String, String)}
      */
-    private void writeDefinition(String word, HttpServletResponse response) throws IOException {
-        String definition = this.dictionary.get(word);
+    private void writeAppointmentBook(String owner, HttpServletResponse response) throws IOException {
+        AppointmentBook book = this.books.get(owner);
 
-        if (definition == null) {
+        if (book == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
         } else {
             PrintWriter pw = response.getWriter();
-            pw.println(Messages.formatDictionaryEntry(word, definition));
+
+            TextDumper2 dumper = new TextDumper2(pw);
+            dumper.dump(book);
 
             pw.flush();
 
@@ -128,21 +154,7 @@ public class AppointmentBookServlet extends HttpServlet
         }
     }
 
-    /**
-     * Writes all of the dictionary entries to the HTTP response.
-     *
-     * The text of the message is formatted with
-     * {@link Messages#formatDictionaryEntry(String, String)}
-     */
-    private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
-    {
-        PrintWriter pw = response.getWriter();
-        Messages.formatDictionaryEntries(pw, dictionary);
 
-        pw.flush();
-
-        response.setStatus( HttpServletResponse.SC_OK );
-    }
 
     /**
      * Returns the value of the HTTP request parameter with the given name.
@@ -160,8 +172,30 @@ public class AppointmentBookServlet extends HttpServlet
       }
     }
 
+
+
+
+    //conveys to the reader that this method
+    //isn't private because it's used in a test
     @VisibleForTesting
-    String getDefinition(String word) {
-        return this.dictionary.get(word);
+     AppointmentBook getAppointmentBook(String owner) {
+        return this.books.get(owner);
+    }
+
+
+
+
+    /**
+     * Returns the value of the book of given owner.
+     *
+     * @param owner
+     *      The owner of the appointmentBook
+     * @return <code>AppointmentBook</code> of owner
+     *         <code>null</code> or is the empty string
+     */
+    public AppointmentBook createAppointmentBook(String owner) {
+        AppointmentBook book = new AppointmentBook(owner);
+        this.books.put(owner,book);
+        return book;
     }
 }

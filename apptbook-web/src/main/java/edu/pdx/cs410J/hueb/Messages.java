@@ -32,8 +32,8 @@ public class Messages
         return String.format( "Defined %s as %s", word, definition );
     }
 
-    public static String allDictionaryEntriesDeleted() {
-        return "All dictionary entries have been deleted";
+    public static String allAptBooksDeleted() {
+        return "All Apt Books have been deleted";
     }
 
     public static Map.Entry<String, String> parseDictionaryEntry(String content) {

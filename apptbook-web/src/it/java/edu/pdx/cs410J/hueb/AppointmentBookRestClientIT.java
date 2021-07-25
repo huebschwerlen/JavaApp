@@ -52,7 +52,10 @@ class AppointmentBookRestClientIT {
 
   @Test
   void test4MissingRequiredParameterReturnsPreconditionFailed() throws IOException {
+    //validates that when you post with no params you get a 412 stat code
     AppointmentBookRestClient client = newAppointmentBookRestClient();
+    //postToMyUrl is a public method in AptBookRestClient specifically
+    //for testing this scenario
     HttpRequestHelper.Response response = client.postToMyURL(Map.of());
     assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("word")));
     assertThat(response.getCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));

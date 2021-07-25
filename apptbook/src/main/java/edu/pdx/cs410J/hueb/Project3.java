@@ -24,49 +24,6 @@ public class Project3 {
 
     public static void main(String[] args) {
 
-//
-//            Appointment apt1 = new Appointment("do sishes", "12/11/1985 1:21 am", "12/12/1985 1:20 pm");
-//            AppointmentBook appointmentBook = new AppointmentBook("SAm");
-//            appointmentBook.addAppointment(apt1);
-//
-//            TextDumper textDumper = new TextDumper("test.txt");
-//            try {
-//                textDumper.dump(appointmentBook);
-//            } catch (IOException e) {
-//                System.out.println("\ndumpeeee fail\n");
-////            e.printStackTrace();
-//            }
-//
-//            TextParser tpp = new TextParser("test.txt");
-//            AppointmentBook newAptBk = new AppointmentBook("Sam");
-//            try {
-//                newAptBk = tpp.parse();
-//            } catch (ParserException e) {
-//                System.out.println("\nparseeee fail\n");
-////            e.printStackTrace();
-//            }
-//
-//        Collection<Appointment> apptss = newAptBk.getAppointments();
-//        for(Appointment a : apptss) {
-//            System.out.println(a.toString());
-//        }
-////
-//            Appointment apt2 = new Appointment("do sishes", "12/11/1984 1:21 am", "12/12/1985 1:20 pm");
-//            newAptBk.addAppointment(apt2);
-//
-////
-//        PrettyPrinter prettyPrinterT = new PrettyPrinter("Ptest.txt");
-//            PrettyPrinter prettyPrinterT = new PrettyPrinter("-");
-//            try {
-//                prettyPrinterT.dump(newAptBk);
-//            } catch (IOException e) {
-//                System.out.println("\nprettyyyyy fail\n");
-//                printErrorMessageAndExitWithUsage("FUCK");
-////            e.printStackTrace();
-//            }
-
-//        tests();
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
