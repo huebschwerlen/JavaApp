@@ -51,11 +51,23 @@ public class Project4 {
             boolean print = options.stream().anyMatch("-print"::equalsIgnoreCase);
 
             //get hostname and port
+            int index = 0;
+            int hostnameIndex = 0;
+            int portIndex = 0;
             for (String o : options) {
                 o.toLowerCase();
+                if (o.equalsIgnoreCase("-host")) {
+                    hostnameIndex = index;
+                } else if (o.equalsIgnoreCase("-port")) {
+                    portIndex = index;
+                }
+                System.out.println("\nArg: " + o + " at index: " + index);
+                index++;
             }
-            int hostnameIndex = options.indexOf("-host");
-            int portIndex = options.indexOf("-port");
+
+            System.out.println("\nhost index: " + hostnameIndex + " port index: " + portIndex);
+//            int hostnameIndex = options.indexOf("-host");
+//            int portIndex = options.indexOf("-port");
             try{
                 hostName = args[hostnameIndex + 1];
                 portString = args[portIndex + 1];
@@ -75,7 +87,7 @@ public class Project4 {
 
 
 
-//            System.out.println("\n-host: " + hostName + "\n-port: " + port + "\n");
+            System.out.println("\n-host: " + hostName + "\n-port: " + port + "\n");
             AppointmentBookRestClient client = new AppointmentBookRestClient(hostName, port);
 
 
