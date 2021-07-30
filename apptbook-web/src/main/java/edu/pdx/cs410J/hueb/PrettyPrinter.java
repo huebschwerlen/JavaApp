@@ -12,19 +12,19 @@ import java.util.concurrent.TimeUnit;
 
 public class PrettyPrinter implements AppointmentBookDumper {
 
-    protected String fileName;
-    private static PrintWriter err;
+    private final Writer writer;
 
 
     /**
      * Creates a new <code>PrettyPrinter</code>
      *
-     *@param file
-     *     The name of the file to dump to
+     *@param writer
+     *     The name of the writer to write to
      */
-    public PrettyPrinter(String file) {
-        this.fileName = file;
+    public PrettyPrinter(Writer writer) {
+        this.writer = writer;
     }
+
 
 
 
@@ -38,24 +38,10 @@ public class PrettyPrinter implements AppointmentBookDumper {
     @Override
     public void dump(AbstractAppointmentBook aptBook) throws IOException {
 
-        err = new PrintWriter(System.err, true);
+            PrintWriter printWriter = new PrintWriter(this.writer);
 
-        try {
 
-            File fi;
-
-            if(this.fileName.equalsIgnoreCase("-")){
-
-                this.fileName = "prettyOut.txt";
-
-            }
-
-            fi = new File(this.fileName);
-
-            Writer writer = new FileWriter(fi);
-
-            PrintWriter printWriter = new PrintWriter(writer);
-
+            ////SORTING///////
             Collection<Appointment> appointments = aptBook.getAppointments();
 
             SortedSet<Appointment> sortedSet = new TreeSet<>();
@@ -64,7 +50,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
                 sortedSet.add(a);
             }
 
-            writer.write(aptBook.getOwnerName() + "'s Appointment Book: \n");
+            printWriter.println("\nAppointments for " + aptBook.getOwnerName() + ":");
 
             for (Appointment apt : sortedSet) {
 
@@ -73,39 +59,17 @@ public class PrettyPrinter implements AppointmentBookDumper {
 
                 writer.write("\n");
 
-//                    writer.write("\n"+apt.toString());
 
                 printWriter.printf("%-5s\n%-5s %3s %3s", apt.toString(), "Duration:", duration, "minutes");
 
-//                    writer.write(" Duration: " + duration + " minutes");
 
                 writer.write("\n");
             }
 
+           writer.write("\n\n");
+
             writer.flush();
             writer.close();
-
-            if(this.fileName.equalsIgnoreCase("prettyOut.txt")) {
-                BufferedReader br = new BufferedReader(new FileReader(this.fileName));
-                String line;
-                System.out.println("\n");
-                while ((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
-                System.out.println("\n");
-
-                if(fi.delete()) {
-//                        System.out.println("Deleted file");
-                } else {
-//                        System.out.println("did NOT Delete file");
-                }
-            }
-
-        } catch (IOException ex) {
-            err.println("\nDirectory Entered Doesn't Seem To Exist\nPlease Try Again With Valid Existing Directory\n ");
-            System.exit(1);
-        }
-
     }
 
     /**

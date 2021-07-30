@@ -1,5 +1,7 @@
 package edu.pdx.cs410J.hueb;
 
+import edu.pdx.cs410J.ParserException;
+
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,11 +63,11 @@ public class Project4 {
                 } else if (o.equalsIgnoreCase("-port")) {
                     portIndex = index;
                 }
-                System.out.println("\nArg: " + o + " at index: " + index);
+//                System.out.println("\nArg: " + o + " at index: " + index);
                 index++;
             }
 
-            System.out.println("\nhost index: " + hostnameIndex + " port index: " + portIndex);
+//            System.out.println("\nhost index: " + hostnameIndex + " port index: " + portIndex);
 //            int hostnameIndex = options.indexOf("-host");
 //            int portIndex = options.indexOf("-port");
             try{
@@ -87,7 +89,7 @@ public class Project4 {
 
 
 
-            System.out.println("\n-host: " + hostName + "\n-port: " + port + "\n");
+//            System.out.println("\n-host: " + hostName + "\n-port: " + port + "\n");
             AppointmentBookRestClient client = new AppointmentBookRestClient(hostName, port);
 
 
@@ -103,24 +105,29 @@ public class Project4 {
             // owner at args[4]
 
             if(args.length==5 && !print) {
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////    PRETTY PRINT ALL      ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
                 owner = args[4];
 
                 try {
-                    String message = client.getAppointments(owner);
+                    AppointmentBook book = client.getAppointments(owner);
+//                    String message = client.getAppointments(owner);
 
-                    if(message==null || message==""){
+                    if(book==null){
                         System.out.println("\nSorry, we could not find any appointments for " + owner + "\n");
+                        System.exit(1);
                     } else {
-                        System.out.println(message);
+                        PrettyPrinter pretty = new PrettyPrinter(new OutputStreamWriter(System.out));
+                        pretty.dump(book);
+//                       System.out.println(message);
                     }
 
-
-
-                } catch (IOException e) {
-                    System.out.println("\nSomething Went Wrong With Finding All Appts For " + owner);
-                    e.printStackTrace();
-                    System.out.println("\nSomething Went Wrong With Finding All Appts For " + owner);
+                } catch (IOException | ParserException e) {
+                    System.out.println("\nSorry, Something Went Wrong With Finding All Appts For " + owner);
+                    error("While contacting server: " + e);
+                    System.exit(1);
                 }
 
                 //find owners apt books and pretty print all apts
@@ -128,7 +135,9 @@ public class Project4 {
                 //or return message is owner is not found
 
             } else if (args.length==12) {
-
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////    SEARCH AND PRETTY PRINT FOUND     ////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
                 if (search && !print) {
 
                     boolean validDateTime12S = (validDate(args[6]) && validTime(args[7]) && validTimeAmPm(args[8]) &&
@@ -169,21 +178,26 @@ public class Project4 {
                         // apts that begin between these times
                         ///////////////////////////////////
                         try {
-                            String message = client.getAppointmentsByTime(owner, beginTime, endTime);
-                            if(message==null || message==""){
-                                System.out.println("\nSorry, we could not find any appointments that match your criteria.\n");
+//                            String message = client.getAppointmentsByTime(owner, beginTime, endTime);
+                            AppointmentBook book = client.getAppointmentsByTime(owner, beginTime, endTime);
+                            if(book==null){
+                                System.out.println("\nSorry, we could not find any appointments that match your search criteria.\n");
+                                System.exit(1);
                             } else {
                                 System.out.println("\nRetrieving appointments beginning" +
                                         "\nat or after: " + beginTime +
                                         "\nand " +
-                                        "\nat or before: " + endTime + " \n........\n\n");
-                                System.out.println(message);
+                                        "\nat or before: " + endTime + " \n\n........\n\n");
+//                                System.out.println(message);
+
+                                PrettyPrinter pretty = new PrettyPrinter(new OutputStreamWriter(System.out));
+                                pretty.dump(book);
                             }
 
-                        } catch (IOException e) {
+                        } catch (IOException | ParserException e) {
                             System.out.println("\nSomething Went Wrong With Finding All Appts Within Time Range For " + owner);
-                            e.printStackTrace();
-                            System.out.println("\nSomething Went Wrong With Finding All Appts Within Time Range For " + owner);
+                            error("While contacting server: " + e);
+                            System.exit(1);
                         }
 
 
@@ -195,6 +209,10 @@ public class Project4 {
 
 
                 } else if (!print && !search) {
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////    ADD - NO PRINT      ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
                     boolean validDateTime12A = (validDate(args[6]) && validTime(args[7]) && validTimeAmPm(args[8]) &&
                             validDate(args[9]) && validTime(args[10]) && validTimeAmPm(args[11]));
@@ -233,7 +251,7 @@ public class Project4 {
                         ///////////////////////////////////
                         try {
                             client.createAppointment(owner, description, beginTime, endTime);
-                            System.out.println("\nCreated appointment. \nUse -print option next time " +
+                            System.out.println("\nAdded appointment. \nUse -print option next time " +
                                     "to see your appointment details after adding it.\n");
 
 
@@ -249,7 +267,6 @@ public class Project4 {
 
 
 
-
                     } else {
                         usage("\n12A)Please Check your Date/Time Formatting");
                     }
@@ -261,6 +278,9 @@ public class Project4 {
 
 
             } else if (args.length==13) {
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////    ADD - AND PRINT!      ////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 
                 if (print) {
 
@@ -299,7 +319,7 @@ public class Project4 {
                         try {
                             client.createAppointment(owner, description, beginTime, endTime);
                             Appointment appt = new Appointment(description, beginTime, endTime);
-                            System.out.println("\nCreated appointment:\n");
+                            System.out.println("\nAdded appointment:\n");
                             System.out.println(appt.toString() + "\n");
 
                         } catch (IOException e) {
@@ -319,11 +339,6 @@ public class Project4 {
             } else {
                 usage("\n13) Invalid Arguments");
             }
-
-
-
-
-
 
         } else {
             usage("\n0) Invalid Number of Options / Arguments");
@@ -422,6 +437,7 @@ public class Project4 {
         InputStream readme = edu.pdx.cs410J.hueb.Project4.class.getResourceAsStream("README.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(readme));
         String line = reader.readLine();
+        System.out.println(line);
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }

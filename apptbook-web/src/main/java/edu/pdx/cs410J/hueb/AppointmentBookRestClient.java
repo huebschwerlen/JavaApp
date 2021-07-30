@@ -1,9 +1,11 @@
 package edu.pdx.cs410J.hueb;
 
 import com.google.common.annotations.VisibleForTesting;
+import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.Map;
 
 import static java.net.HttpURLConnection.HTTP_OK;
@@ -41,19 +43,24 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
   /**
    * Returns the appts for the given owner
    */
-  public String getAppointments(String owner) throws IOException {
+  public AppointmentBook getAppointments(String owner) throws IOException, ParserException {
     Response response = get(this.url, Map.of("owner", owner));
     throwExceptionIfNotOkayHttpStatus(response);
-    return response.getContent();
+    String text = response.getContent();
+    TextParser parser = new TextParser(new StringReader(text));
+    return parser.parse();
   }
 
   /**
    * Returns the appts for the given owner that begin within time range
    */
-  public String getAppointmentsByTime(String owner, String beginTime, String endTime) throws IOException {
+  public AppointmentBook getAppointmentsByTime(String owner, String beginTime, String endTime) throws IOException, ParserException {
     Response response = get(this.url, Map.of("owner",owner, "beginTime", beginTime, "endTime", endTime));
     throwExceptionIfNotOkayHttpStatus(response);
-    return response.getContent();
+//    return response.getContent();
+    String text = response.getContent();
+    TextParser parser = new TextParser(new StringReader(text));
+    return parser.parse();
   }
 
 

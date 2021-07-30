@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -53,6 +54,37 @@ public class AppointmentBookServlet extends HttpServlet
     }
 
 
+
+    /**
+     * Writes the appointmentBook of owner to the HTTP response.
+     *
+     * The text of the message is formatted with TextDumper2
+     */
+    private void writeAppointmentBook(String owner, HttpServletResponse response) throws IOException {
+
+        AppointmentBook book = this.books.get(owner.toLowerCase(Locale.ROOT));
+
+        if (book == null) {
+//            PrintWriter pw = response.getWriter();
+//
+//            TextDumper2 dumper = new TextDumper2(pw);
+//            dumper.dump(book);
+//            pw.flush();
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+        } else {
+            PrintWriter pw = response.getWriter();
+
+            TextDumper2 dumper = new TextDumper2(pw);
+            dumper.dump(book);
+            pw.flush();
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+    }
+
+
+
     /**
      * Writes the appointments that begin within time range
      * from appointmentBook of owner to the HTTP response.
@@ -60,12 +92,14 @@ public class AppointmentBookServlet extends HttpServlet
      * The text of the message is formatted with TextDumper2
      */
     private void writeAppointmentBookByTime(String owner, String beginTime, String endTime, HttpServletResponse response) throws IOException {
-        AppointmentBook book = this.books.get(owner);
 
+        AppointmentBook book = this.books.get(owner.toLowerCase(Locale.ROOT));
 
 
         if (book == null) {
+
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
         } else {
             Date beginTime1 = null;
             try {
@@ -99,7 +133,9 @@ public class AppointmentBookServlet extends HttpServlet
             }
 
             if (bookByTime == null) {
+
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
             } else {
 
                 PrintWriter pw = response.getWriter();
@@ -112,30 +148,11 @@ public class AppointmentBookServlet extends HttpServlet
 
             }
 
-
         }
     }
 
-    /**
-     * Writes the appointmentBook of owner to the HTTP response.
-     *
-     * The text of the message is formatted with TextDumper2
-     */
-    private void writeAppointmentBook(String owner, HttpServletResponse response) throws IOException {
-        AppointmentBook book = this.books.get(owner);
-        if (book == null) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
-        } else {
-            PrintWriter pw = response.getWriter();
 
-            TextDumper2 dumper = new TextDumper2(pw);
-            dumper.dump(book);
-            pw.flush();
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        }
-    }
 
     /**
      * Handles an HTTP POST request by storing the appointment entry for the
@@ -174,7 +191,7 @@ public class AppointmentBookServlet extends HttpServlet
         }
 
 
-        AppointmentBook book = this.books.get(owner);
+        AppointmentBook book = this.books.get(owner.toLowerCase(Locale.ROOT));
         if (book == null) {
             book = createAppointmentBook(owner);
         }
@@ -251,7 +268,7 @@ public class AppointmentBookServlet extends HttpServlet
     //isn't private because it's used in a test
     @VisibleForTesting
      AppointmentBook getAppointmentBook(String owner) {
-        return this.books.get(owner);
+        return this.books.get(owner.toLowerCase(Locale.ROOT));
     }
 
 
@@ -267,7 +284,7 @@ public class AppointmentBookServlet extends HttpServlet
      */
     public AppointmentBook createAppointmentBook(String owner) {
         AppointmentBook book = new AppointmentBook(owner);
-        this.books.put(owner,book);
+        this.books.put(owner.toLowerCase(Locale.ROOT),book);
         return book;
     }
 }

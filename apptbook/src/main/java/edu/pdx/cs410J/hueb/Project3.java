@@ -419,9 +419,7 @@ public class Project3 {
                         String textFileFile = args[textFileIndex + 1];
                         String prettyFileFile = args[prettyIndex + 1];
 
-//                        System.out.println("\n-textfile is at index: " + textFileIndex + "\n-pretty is at index: " +
-//                                prettyIndex + "\ntext file's file is: " + textFileFile + "\nand, pretty's file is: " +
-//                                prettyFileFile + "\n");
+
 
                         //1. Parse textFileFile to new aptBook
                         Appointment apt = new Appointment(args[5], beginTime, endTime);

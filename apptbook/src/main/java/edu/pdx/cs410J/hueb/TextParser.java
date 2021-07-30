@@ -97,7 +97,7 @@ public class TextParser implements AppointmentBookParser {
                             e.printStackTrace();
                         }
                         try {
-                            endTime1 = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(beginTime);
+                            endTime1 = new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(endTime);
                         } catch (ParseException e) {
                             System.err.println("\nend time format failed in text parser\n");
                             e.printStackTrace();

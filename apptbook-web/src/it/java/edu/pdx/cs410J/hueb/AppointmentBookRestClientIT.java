@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.hueb;
 
+import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.jupiter.api.MethodOrderer.MethodName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class AppointmentBookRestClientIT {
   }
 
   @Test
-  void test2CreateAptBookWithOneApt() throws IOException {
+  void test2CreateAptBookWithOneApt() throws IOException, ParserException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
     String owner = "Dave";
     String description = "teach java";
@@ -49,9 +50,15 @@ class AppointmentBookRestClientIT {
 
     client.createAppointment(owner, description, beginTime, endTime);
 
-    String aptBookText = client.getAppointments(owner);
-    assertThat(aptBookText, containsString(owner));
-    assertThat(aptBookText, containsString(description));
+    AppointmentBook book = client.getAppointments(owner);
+    assertThat(book.getOwnerName(), equalTo(owner));
+
+    Appointment appointment = book.getAppointments().iterator().next();
+    assertThat(appointment.getDescription(), equalTo(description));
+
+//    String aptBookText = client.getAppointments(owner);
+//    assertThat(aptBookText, containsString(owner));
+//    assertThat(aptBookText, containsString(description));
   }
 
   @Test
