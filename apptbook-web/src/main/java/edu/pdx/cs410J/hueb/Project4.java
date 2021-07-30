@@ -158,6 +158,7 @@ public class Project4 {
                         } catch (ParseException e) {
                             System.err.println("\n12S) Parse of Begin Time failed - Please Check your Date/Time Formatting\n");
 //                            e.printStackTrace();
+                            usage("");
                         }
 
                         Date endTime1 = null;
@@ -166,6 +167,7 @@ public class Project4 {
                         } catch (ParseException e) {
                             System.err.println("\n12S) Parse of End Time failed - Please Check your Date/Time Formatting\n");
 //                            e.printStackTrace();
+                            usage("");
                         }
 
                         if(endTime1.before(beginTime1)) {
@@ -181,7 +183,7 @@ public class Project4 {
                         try {
 //                            String message = client.getAppointmentsByTime(owner, beginTime, endTime);
                             AppointmentBook book = client.getAppointmentsByTime(owner, beginTime, endTime);
-                            if(book==null){
+                            if(book==null || book.getOwnerName()==null){
                                 System.out.println("\nSorry, we could not find any appointments that match your search criteria.\n");
                                 System.exit(1);
                             } else {
@@ -232,6 +234,7 @@ public class Project4 {
                         } catch (ParseException e) {
                             System.err.println("\n12A) Parse of Begin Time failed - Please Check your Date/Time Formatting\n");
 //                            e.printStackTrace();
+                            usage("");
                         }
 
                         Date endTime1 = null;
@@ -240,6 +243,7 @@ public class Project4 {
                         } catch (ParseException e) {
                             System.err.println("\n12A) Parse of End Time failed - Please Check your Date/Time Formatting\n");
 //                            e.printStackTrace();
+                            usage("");
                         }
 
                         if(endTime1.before(beginTime1)) {
@@ -262,8 +266,9 @@ public class Project4 {
 
 
                         } catch (IOException e) {
-                            e.printStackTrace();
+//                            e.printStackTrace();
                             System.out.println("\n12A) Something went wrong with adding your appointment\n");
+                            usage("");
                         }
 
 
@@ -302,6 +307,7 @@ public class Project4 {
                         } catch (ParseException e) {
                             System.err.println("\n13) Parse of Begin Time failed - Please Check your Date/Time Formatting\n");
 //                            e.printStackTrace();
+                            usage("");
                         }
 
                         Date endTime1 = null;
@@ -310,6 +316,7 @@ public class Project4 {
                         } catch (ParseException e) {
                             System.err.println("\n13) Parse of End Time failed - Please Check your Date/Time Formatting\n");
 //                            e.printStackTrace();
+                            usage("");
                         }
 
                         if(endTime1.before(beginTime1)) {
@@ -324,8 +331,9 @@ public class Project4 {
                             System.out.println(appt.toString() + "\n");
 
                         } catch (IOException e) {
-                            e.printStackTrace();
+//                            e.printStackTrace();
                             System.out.println("\n12A) Something went wrong with adding your appointment\n");
+                            usage("");
                         }
 
 

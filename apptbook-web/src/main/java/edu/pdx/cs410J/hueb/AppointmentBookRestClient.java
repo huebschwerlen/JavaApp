@@ -53,6 +53,11 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
 //    throwExceptionIfNotOkayHttpStatus(response);
 //    return response.getContent();
     String text = response.getContent();
+//    System.out.println("TEXT: " + text);
+    if (text.equalsIgnoreCase("not found")) {
+      System.out.println("\nCould not find user matching your criteria, please try again\n");
+      System.exit(1);
+    }
     TextParser parser = new TextParser(new StringReader(text));
     return parser.parse();
   }
