@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 @TestMethodOrder(MethodName.class)
 class Project4IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
-    private static final String PORT = System.getProperty("http.port", "8080");
+    private static final String PORT = System.getProperty("http.port", "1234");
 
     @Test
     void test0RemoveAllMappings() throws IOException {
@@ -37,13 +37,13 @@ class Project4IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardError(), containsString(Project4.MISSING_ARGS));
     }
 
-//    @Test
-//    void test2EmptyServer() {
-//        MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT );
-//        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
-//        String out = result.getTextWrittenToStandardOut();
-//        assertThat(out, out, containsString(Messages.formatWordCount(0)));
-//    }
+    @Test
+    void test2EmptyServer() {
+        MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT );
+        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(1));
+        String out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString(""));
+    }
 
 //    @Test
 //    void test3NoDefinitionsThrowsAppointmentBookRestException() {
@@ -58,22 +58,95 @@ class Project4IT extends InvokeMainTestCase {
 //        }
 //    }
 
-//    @Test
-//    void test4AddDefinition() {
-//        String word = "WORD";
-//        String definition = "DEFINITION";
-//
-//        MainMethodResult result = invokeMain( Project4.class, HOSTNAME, PORT, word, definition );
-//        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
-//        String out = result.getTextWrittenToStandardOut();
-//        assertThat(out, out, containsString(Messages.definedWordAs(word, definition)));
-//
-//        result = invokeMain( Project4.class, HOSTNAME, PORT, word );
-//        out = result.getTextWrittenToStandardOut();
-//        assertThat(out, out, containsString(Messages.formatDictionaryEntry(word, definition)));
-//
-//        result = invokeMain( Project4.class, HOSTNAME, PORT );
-//        out = result.getTextWrittenToStandardOut();
-//        assertThat(out, out, containsString(Messages.formatDictionaryEntry(word, definition)));
-//    }
+    @Test
+    void test4AddAppoinment() {
+        String beginTime = "12/11/1985 11:50 am";
+        String endTime = "12/11/1986 12:00 pm";
+        String owner = "owner";
+        String desc = "desc";
+
+        MainMethodResult result = invokeMain( Project4.class, "-host", "localhost", "-port", "8080", "owner", "desc", "12/11/1985", "11:50", "am", "12/12/1985", "11:55", "pm" );
+        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
+        String out = result.getTextWrittenToStandardOut();
+        assertThat(out, containsString("-print"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, owner, desc, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("-print"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, owner, desc, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("-print"));
+    }
+
+
+
+
+    @Test
+    void test5GetAllAppts() {
+        String beginTime = "12/11/1985 11:50 am";
+        String endTime = "12/11/1986 12:00 pm";
+        String owner = "owner";
+        String desc = "desc";
+
+        MainMethodResult result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, owner );
+        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
+        String out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("owner"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, owner );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("owner"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, owner);
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("owner"));
+    }
+
+
+    @Test
+    void test6AddSecondAppoinmentWithPrint() {
+        String beginTime = "12/11/1985 11:50 am";
+        String endTime = "12/11/1986 12:00 pm";
+        String owner = "owner";
+        String desc = "desc";
+
+        MainMethodResult result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, "-print", owner, desc, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
+        String out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("desc"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, "-print", owner, desc, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("desc"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, "-print", owner, desc, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("desc"));
+    }
+
+
+    @Test
+    void test7SearchAppts() {
+        String beginTime = "12/11/1985 11:50 am";
+        String endTime = "12/11/1986 12:00 pm";
+        String owner = "owner";
+        String desc = "desc";
+
+        MainMethodResult result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, "-search", owner, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        assertThat(result.getTextWrittenToStandardError(), result.getExitCode(), equalTo(0));
+        String out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("begin"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, "-search", owner, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("begin"));
+
+        result = invokeMain( Project4.class, "-host", HOSTNAME, "-port", PORT, "-search", owner, "12/11/1985", "11:50", "am", "12/11/1985", "11:50", "am" );
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString("begin"));
+    }
+
+
+
 }

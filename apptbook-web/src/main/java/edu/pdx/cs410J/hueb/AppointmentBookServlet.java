@@ -218,7 +218,7 @@ public class AppointmentBookServlet extends HttpServlet
         this.books.clear();
 
         PrintWriter pw = response.getWriter();
-        pw.println(Messages.allAptBooksDeleted());
+//        pw.println(Messages.allAptBooksDeleted());
         pw.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);
@@ -230,12 +230,13 @@ public class AppointmentBookServlet extends HttpServlet
     /**
      * Writes an error message about a missing parameter to the HTTP response.
      *
-     * The text of the error message is created by {@link Messages#missingRequiredParameter(String)}
+     * The text of the error message
      */
     private void missingRequiredParameter( HttpServletResponse response, String parameterName )
         throws IOException
     {
-        String message = Messages.missingRequiredParameter(parameterName);
+        String message = "Missing required parameter";
+//        String message = Messages.missingRequiredParameter(parameterName);
         response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED, message);
     }
 

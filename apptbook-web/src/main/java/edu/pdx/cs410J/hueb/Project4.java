@@ -121,6 +121,7 @@ public class Project4 {
                     } else {
                         PrettyPrinter pretty = new PrettyPrinter(new OutputStreamWriter(System.out));
                         pretty.dump(book);
+                        System.exit(0);
 //                       System.out.println(message);
                     }
 

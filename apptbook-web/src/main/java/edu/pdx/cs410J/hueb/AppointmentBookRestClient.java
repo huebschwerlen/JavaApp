@@ -32,13 +32,7 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
     this.url = String.format("http://%s:%d/%s/%s", hostName, port, WEB_APP, SERVLET);
   }
 
-  /**
-   * Returns all dictionary entries from the server
-   */
-  public Map<String, String> getAllDictionaryEntries() throws IOException {
-    Response response = get(this.url, Map.of());
-    return Messages.parseDictionary(response.getContent());
-  }
+
 
   /**
    * Returns the appts for the given owner
@@ -56,7 +50,7 @@ public class AppointmentBookRestClient extends HttpRequestHelper {
    */
   public AppointmentBook getAppointmentsByTime(String owner, String beginTime, String endTime) throws IOException, ParserException {
     Response response = get(this.url, Map.of("owner",owner, "beginTime", beginTime, "endTime", endTime));
-    throwExceptionIfNotOkayHttpStatus(response);
+//    throwExceptionIfNotOkayHttpStatus(response);
 //    return response.getContent();
     String text = response.getContent();
     TextParser parser = new TextParser(new StringReader(text));

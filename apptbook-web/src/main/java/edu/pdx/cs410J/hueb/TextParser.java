@@ -72,7 +72,7 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
 
                     //make sure all owner names match owner name from first line in file
                     if (!owner.equalsIgnoreCase(values[0])) {
-                        System.err.println("\nSorry, your data seems to be corrupted...\n");
+                        System.err.println("\nSorry, could not complete your request, please try again...\n");
                         System.exit(1);
                     }
 
@@ -114,11 +114,11 @@ public class TextParser implements AppointmentBookParser<AppointmentBook> {
                         aptBook.addAppointment(apt);
 
                     } else {
-                        System.err.println("\nSorry, your data seems to be corrupted...\n");
+                        System.err.println("\nSorry, could not complete your request, please try again...\n");
                         System.exit(1);
                     }
                 } else {
-                    System.err.println("\nSorry, your data seems to be corrupted...\n");
+                    System.err.println("\nSorry, could not complete your request, please try again...\n");
                     System.exit(1);
                 }
 
