@@ -9,4 +9,12 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="appointment_book_owner">Appointment Book Owner</string>
+    <string name="appointment_description">Appointment Description</string>
+    <string name="appointment_begin_time">Appointment Begin Time</string>
+    <string name="appointment_end_time">Appointment End Time</string>
+    <string name="search_appointments">Search Appointments</string>
+    <string name="view_all_appointments">View All Appointments</string>
+    <string name="add_appointment">Add Appointment</string>
+    <string name="view_appointments">View Appointments</string>
 </resources>
