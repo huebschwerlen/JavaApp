@@ -42,6 +42,7 @@ public class AppointmentBookServlet extends HttpServlet
         String owner = getParameter( OWNER_PARAMETER, request );
 
         String beginTime = getParameter(BEGINTIME_PARAMETER, request);
+
         String endTime = getParameter(ENDTIME_PARAMETER, request);
 
         if (owner == null) {
