@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -86,6 +89,11 @@ public class SearchViewActivity extends AppCompatActivity {
 
         }
 
+        Collection<Appointment> apptArr = bookByTime.getAppointments();
+
+        if (apptArr.isEmpty()) {
+            toast("No Appointments Found Matching Search Criteria");
+        }
 
 
         File contextDirectory = getApplicationContext().getDataDir();

@@ -6,4 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ReadMeActivity">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="387dp"
+        android:layout_height="576dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:text="@string/sam_huebschwerlen_nproject_5_n_nthis_appointment_book_application_can_perform_several_functions_n_n_add_appointments_n_1_select_add_appointment_button_from_main_screen_n_2_enter_information_and_select_add_appointment_button_n_n_n_search_for_appointments_n_1_select_search_appointment_button_from_main_screen_n_2_enter_owner_and_begin_and_end_time_to_find_n_appointments_beginning_between_said_times_n_3_then_select_search_appointments_button_n_n_n_view_all_appointments_n_1_select_view_all_appointments_button_from_main_screen_n2_then_enter_owners_names_and_select_view_button_n_n_n_ndate_and_time_should_be_in_the_format_nmm_dd_yyyy_hh_mm_am_pm_nend_time_can_not_be_before_begin_time_n_n_n_nif_the_owner_entered_does_not_exist_the_application_will_attempt_to_create_a_new_appointment_book_for_owner_to_save_appointments_to"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

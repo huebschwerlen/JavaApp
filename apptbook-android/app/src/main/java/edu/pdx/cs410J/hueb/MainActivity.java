@@ -77,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        Button help = findViewById(R.id.helpButton);
+        help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(MainActivity.this, "View Appt!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
     }
 
