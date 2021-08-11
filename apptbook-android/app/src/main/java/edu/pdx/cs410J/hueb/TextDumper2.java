@@ -14,6 +14,7 @@ public class TextDumper2 implements AppointmentBookDumper<AppointmentBook> {
 
 
     private final PrintWriter writer;
+//    private final FileWriter writer;
 
 
     /**
@@ -25,10 +26,16 @@ public class TextDumper2 implements AppointmentBookDumper<AppointmentBook> {
 //    public TextDumper2(String file) {
 //        this.fileName = file;
 //    }
+
     public TextDumper2(PrintWriter writer) {
         this.writer = writer;
 
     }
+
+//    public TextDumper2(FileWriter writer) {
+//        this.writer = writer;
+//
+//    }
 
 
 
@@ -74,6 +81,9 @@ public class TextDumper2 implements AppointmentBookDumper<AppointmentBook> {
             writer.write("\n");
 
         }
+
+        writer.flush();
+        writer.close();
 
     }
 }

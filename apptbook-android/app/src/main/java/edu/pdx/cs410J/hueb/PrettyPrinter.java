@@ -12,7 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 public class PrettyPrinter implements AppointmentBookDumper {
 
-    private final Writer writer;
+//    private final Writer writer;
+    private final PrintWriter writer;
 
 
     /**
@@ -21,7 +22,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
      *@param writer
      *     The name of the writer to write to
      */
-    public PrettyPrinter(Writer writer) {
+    public PrettyPrinter(PrintWriter writer) {
         this.writer = writer;
     }
 
@@ -38,7 +39,7 @@ public class PrettyPrinter implements AppointmentBookDumper {
     @Override
     public void dump(AbstractAppointmentBook aptBook) throws IOException {
 
-        PrintWriter printWriter = new PrintWriter(this.writer);
+//        PrintWriter printWriter = new PrintWriter(this.writer);
 
 
         ////SORTING///////
@@ -50,23 +51,23 @@ public class PrettyPrinter implements AppointmentBookDumper {
             sortedSet.add(a);
         }
 
-        printWriter.println("\nAppointments for " + aptBook.getOwnerName() + ":");
+//        writer.println("\nAppointments for " + aptBook.getOwnerName() + ":");
 
         for (Appointment apt : sortedSet) {
 
 
             Long duration = getDateDiff(apt.getBeginTime(), apt.getEndTime(), TimeUnit.MINUTES);
 
-            writer.write("\n");
+//            writer.write("\n");
 
 
-            printWriter.printf("%-5s\n%-5s %3s %3s", apt.toString(), "Duration:", duration, "minutes");
+            writer.printf("%s %s %s %s", apt.toString(), "Duration:", duration, "minutes");
 
 
             writer.write("\n");
         }
 
-        writer.write("\n\n");
+//        writer.write("\n\n");
 
         writer.flush();
         writer.close();

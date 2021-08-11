@@ -52,7 +52,9 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
         Date beginTime1;
 //    super();
         this.description = description;
-
+        if (description.isEmpty()){
+            throw new IllegalArgumentException("Please Enter A Description for Appointment");
+        }
 
 
         //these date conversions should take place outside of, and before the contructor call
@@ -62,8 +64,9 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
             beginTime1 = new SimpleDateFormat("MM/dd/yyyy hh:mm aa").parse(beginTime);
         } catch (ParseException e) {
             beginTime1 = null;
-            System.err.println("\nParse of beginTime failed in Appointment Constuctor\n");
-            e.printStackTrace();
+            throw new IllegalArgumentException("Date/Time Format Error\nUse: mm/dd/yyyy hh:mm am/pm");
+//            System.err.println("\nParse of beginTime failed in Appointment Constuctor\n");
+//            e.printStackTrace();
         }
         this.beginTime = beginTime1;
 
@@ -71,16 +74,18 @@ public class Appointment extends AbstractAppointment implements Comparable<Appoi
             endTime1 = new SimpleDateFormat("MM/dd/yyyy hh:mm aa").parse(endTime);
         } catch (ParseException e) {
             endTime1 = null;
-            System.err.println("\nParse of endTime failed in Appointment Constuctor\n");
-            e.printStackTrace();
+//            System.err.println("\nParse of endTime failed in Appointment Constuctor\n");
+//            e.printStackTrace();
+            throw  new IllegalArgumentException("Date/Time Format Error\nUse: mm/dd/yyyy hh:mm am/pm");
         }
         this.endTime = endTime1;
 
 
         if(this.endTime.before(this.beginTime)) {
-            System.err.println("\n\nEnd Time Can Not Be Before Begin Time\nPlease Try Again\n\n");
-            System.err.println(USAGE_MESSAGE);
-            System.exit(1);
+//            System.err.println("\n\nEnd Time Can Not Be Before Begin Time\nPlease Try Again\n\n");
+//            System.err.println(USAGE_MESSAGE);
+//            System.exit(1);
+            throw  new IllegalArgumentException("End Time Before Begin Time");
         }
 
     }

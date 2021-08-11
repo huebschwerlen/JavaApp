@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         addAppt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Adding Appt!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "Adding Appt!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, AddApptActivity.class);
                 startActivity(intent);
             }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         searchAppts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Searching Appt!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "Searching Appt!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, SearchApptsActivity.class);
                 startActivity(intent);
             }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         viewAllAppts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "View Appt!", Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, "View Appt!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, ListAllApptsActivity.class);
                 startActivity(intent);
             }
@@ -80,27 +80,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
 }

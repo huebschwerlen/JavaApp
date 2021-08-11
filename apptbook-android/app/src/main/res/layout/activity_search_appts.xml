@@ -26,6 +26,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/text_input_owner2_search_appt"
                 android:hint="@string/appointment_book_owner"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +45,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/text_input_btime2_search_appt"
                 android:hint="@string/appointment_begin_time"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -59,20 +61,19 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/text_input_etime2_search_appt"
                 android:hint="@string/appointment_end_time"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/searchApptsButtonSearchAppts"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:text="@string/search_appointments"
-                />
-            <!--                android:onClick="addAppointment"-->
-
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:id="@+id/searchApptsButtonSearchAppts"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:text="@string/search_appointments"
+            />
 
     </LinearLayout>
 

@@ -24,6 +24,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_owner2_add_appt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/appointment_book_owner"
@@ -39,10 +40,12 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_desc2_add_appt"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:hint="@string/appointment_description"
-                android:inputType="textAutoCorrect|textMultiLine" />
+                android:inputType="textAutoCorrect|textMultiLine"
+       />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -55,6 +58,7 @@
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_bTime2_add_appt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/appointment_begin_time"
@@ -72,6 +76,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/text_input_eTime2_add_appt"
                 android:hint="@string/appointment_end_time"
                 android:inputType="text" />
 
